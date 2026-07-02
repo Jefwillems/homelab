@@ -1,0 +1,9 @@
+crds:
+  enabled: true
+prometheus:
+  enabled: false
+config:
+  enableGatewayAPI: true
+extraArgs:
+  - '--enable-gateway-api'
+  - '--enable-certificate-owner-ref'
