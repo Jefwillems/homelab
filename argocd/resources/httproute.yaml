@@ -4,7 +4,7 @@ metadata:
   name: argocd-route
 spec:
   parentRefs:
-    - name: lab-gateway
+    - name: homelab-gateway
       namespace: gateway
       group: gateway.networking.k8s.io
       kind: Gateway
