@@ -9,3 +9,6 @@ helmCharts:
     version: v1.20.3
     valuesFile: values/values.yaml
     includeCRDs: true
+
+resources:
+  - resources/cluster-issuer.yaml
