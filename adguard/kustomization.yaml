@@ -19,3 +19,17 @@ patches:
     target:
       kind: Service
       name: adguard-home-adguard-home-dns
+  - patch: |-
+      - op: add
+        path: /spec/rules/0/backendRefs/0/weight
+        value: 1
+      - op: add
+        path: /spec/rules/0/backendRefs/0/kind
+        value: Service
+      - op: add
+        path: /spec/rules/0/backendRefs/0/group
+        value: ''
+    target:
+      kind: HttpRoute
+      name: adguard-home-adguard-home
+      namespace: adguard
