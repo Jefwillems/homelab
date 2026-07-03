@@ -9,7 +9,7 @@ spec:
       group: gateway.networking.k8s.io
       kind: Gateway
   hostnames:
-    - 'argo.talos-qg7-n95'
+    - 'argo.home.jef.app'
   rules:
     - matches:
         - path:

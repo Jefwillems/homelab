@@ -10,7 +10,7 @@ spec:
     - protocol: HTTP
       name: http
       port: 80
-      hostname: '*.talos-qg7-n95'
+      hostname: '*.home.jef.app'
       allowedRoutes:
         namespaces:
           from: All
