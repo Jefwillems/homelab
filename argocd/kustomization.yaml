@@ -8,3 +8,4 @@ resources:
 
 patches:
   - path: overlays/argocd-cm.yaml
+  - path: overlays/argocd-cmd-params-cm.yaml
