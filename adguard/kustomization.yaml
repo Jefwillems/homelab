@@ -10,3 +10,12 @@ helmCharts:
     valuesFile: values/values.yaml
     includeCRDs: true
     releaseName: adguard-home
+
+patches:
+  - patch: |-
+      spec:
+        externalTrafficPolicy: Local
+    target:
+      kind: Service
+      name: adguard-home-adguard-home-dns
+      namespace: adguard
