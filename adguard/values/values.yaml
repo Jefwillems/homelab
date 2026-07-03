@@ -1,10 +1,13 @@
 config:
   existingSecret: adguard-home-config
+
 persistence:
   conf:
     size: 256Mi
+    storageClass: local-path
   work:
     size: 2Gi
+    storageClass: local-path
 
 resources:
   requests:
