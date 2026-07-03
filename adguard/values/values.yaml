@@ -1,0 +1,37 @@
+config:
+  existingSecret: adguard-home-config
+persistence:
+  conf:
+    size: 256Mi
+  work:
+    size: 2Gi
+
+resources:
+  requests:
+    cpu: 50m
+    memory: 64Mi
+  limits:
+    cpu: 250m
+    memory: 256Mi
+
+service:
+  web:
+    type: ClusterIP
+  dns:
+    type: LoadBalancer
+    loadBalancerIP: '192.168.178.99'
+
+gateway:
+  enabled: true
+  parentRefs:
+    - name: homelab-gateway
+      namespace: gateway
+      group: gateway.networking.k8s.io
+      kind: Gateway
+  hostnames:
+    - adguard.home.jef.app
+  path: /
+  pathType: PathPrefix
+
+ingress:
+  enabled: false
