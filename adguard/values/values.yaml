@@ -22,7 +22,7 @@ service:
     type: ClusterIP
   dns:
     type: LoadBalancer
-    loadBalancerIP: '192.168.178.99'
+    loadBalancerIP: '192.168.178.250'
 
 gateway:
   enabled: true
