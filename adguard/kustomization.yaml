@@ -30,6 +30,6 @@ patches:
         path: /spec/rules/0/backendRefs/0/group
         value: ''
     target:
-      kind: HttpRoute
+      kind: HTTPRoute
       name: adguard-home-adguard-home
       namespace: adguard
