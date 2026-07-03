@@ -13,9 +13,9 @@ helmCharts:
 
 patches:
   - patch: |-
-      spec:
-        externalTrafficPolicy: Local
+      - op: replace
+        path: /spec/externalTrafficPolicy
+        value: Local
     target:
       kind: Service
       name: adguard-home-adguard-home-dns
-      namespace: adguard
