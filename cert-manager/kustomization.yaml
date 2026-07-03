@@ -9,6 +9,7 @@ helmCharts:
     version: v1.20.3
     valuesFile: values/values.yaml
     includeCRDs: true
+    releaseName: cert-manager
 
 resources:
   - resources/cluster-issuer.yaml
