@@ -1,0 +1,98 @@
+# ── Grafana ────────────────────────────────────────────────────────────────────
+grafana:
+  enabled: true
+
+  # Create a Secret named "grafana-admin-secret" in the observability namespace
+  # with keys admin-user and admin-password before deploying.
+  admin:
+    existingSecret: grafana-admin-secret
+    userKey: admin-user
+    passwordKey: admin-password
+
+  persistence:
+    enabled: true
+    size: 2Gi
+
+  # TLS is terminated at the Gateway — Grafana serves plain HTTP internally
+  service:
+    type: ClusterIP
+
+  ingress:
+    enabled: false
+
+  grafana.ini:
+    server:
+      root_url: https://grafana.home.jef.app
+    auth:
+      disable_login_form: false
+
+  # Pre-load the Loki datasource when Loki is added later
+  additionalDataSources: []
+
+# ── Prometheus ─────────────────────────────────────────────────────────────────
+prometheus:
+  prometheusSpec:
+    retention: 15d
+
+    storageSpec:
+      volumeClaimTemplate:
+        spec:
+          accessModes: ['ReadWriteOnce']
+          resources:
+            requests:
+              storage: 20Gi
+
+    # Discover ServiceMonitors / PodMonitors / ProbeMonitors across ALL namespaces
+    # (not just those created by this chart). Required to pick up Cilium, ArgoCD,
+    # AdGuard, cert-manager, etc.
+    serviceMonitorSelectorNilUsesHelmValues: false
+    podMonitorSelectorNilUsesHelmValues: false
+    ruleSelectorNilUsesHelmValues: false
+    probeSelectorNilUsesHelmValues: false
+
+  service:
+    type: ClusterIP
+
+# ── Alertmanager ───────────────────────────────────────────────────────────────
+alertmanager:
+  alertmanagerSpec:
+    storage:
+      volumeClaimTemplate:
+        spec:
+          accessModes: ['ReadWriteOnce']
+          resources:
+            requests:
+              storage: 1Gi
+
+  service:
+    type: ClusterIP
+
+# ── Node Exporter ──────────────────────────────────────────────────────────────
+# hostRootFsMount must be disabled on Talos — the root filesystem is immutable
+# and mounted differently from a standard Linux node.
+prometheus-node-exporter:
+  hostRootFsMount:
+    enabled: false
+  extraArgs:
+    - --collector.filesystem.mount-points-exclude=^/(dev|proc|sys|var/lib/docker/.+|var/lib/kubelet/.+)($|/)
+    - --collector.filesystem.fs-types-exclude=^(autofs|binfmt_misc|bpf|cgroup2?|configfs|debugfs|devpts|devtmpfs|fusectl|hugetlbfs|iso9660|mqueue|nsfs|overlay|proc|procfs|pstore|rpc_pipefs|securityfs|selinuxfs|squashfs|sysfs|tracefs)$
+
+# ── kube-state-metrics ─────────────────────────────────────────────────────────
+kube-state-metrics:
+  enabled: true
+
+# ── Disabled — not accessible by default on Talos ──────────────────────────────
+# These components bind to localhost on Talos control plane nodes and are not
+# reachable by Prometheus without additional machine config changes.
+kubeControllerManager:
+  enabled: false
+
+kubeScheduler:
+  enabled: false
+
+kubeEtcd:
+  enabled: false
+
+# Cilium replaces kube-proxy — disable the scrape target entirely.
+kubeProxy:
+  enabled: false
