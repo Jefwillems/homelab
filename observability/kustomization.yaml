@@ -13,4 +13,5 @@ helmCharts:
     includeCRDs: true
 
 resources:
+  - resources/namespace.yaml
   - resources/grafana-httproute.yaml
