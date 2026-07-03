@@ -5,16 +5,46 @@ ipam:
   mode: kubernetes
 gatewayAPI:
   enabled: true
+prometheus:
+  enabled: true
+  serviceMonitor:
+    enabled: true
+    trustCRDsExist: true
 operator:
   replicas: 1
+  prometheus:
+    enabled: true
+    serviceMonitor:
+      enabled: true
+      trustCRDsExist: true
 k8sServiceHost: 'localhost'
 k8sServicePort: 7445
 hubble:
   enabled: true
   relay:
     enabled: true
+    prometheus:
+      enabled: true
+      serviceMonitor:
+        enabled: true
+        trustCRDsExist: true
   ui:
     enabled: true
+  metrics:
+    enabled:
+      - dns:query
+      - drop
+      - tcp
+      - flow
+      - port-distribution
+      - icmp
+    serviceMonitor:
+      enabled: true
+      trustCRDsExist: true
+    dashboards:
+      enabled: true
+      annotations:
+        grafana_dashboard: '1'
 
 cgroup:
   autoMount:

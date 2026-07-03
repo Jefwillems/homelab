@@ -26,6 +26,41 @@ grafana:
     auth:
       disable_login_form: false
 
+  # Sidecar watches for ConfigMaps labelled grafana_dashboard="1" across all
+  # namespaces and hot-loads them into Grafana automatically.
+  # Cilium/Hubble dashboards are created by the Cilium chart using this label.
+  sidecar:
+    dashboards:
+      enabled: true
+      searchNamespace: ALL
+      label: grafana_dashboard
+      labelValue: '1'
+
+  # Dashboards loaded directly from grafana.com at startup.
+  dashboardProviders:
+    dashboardproviders.yaml:
+      apiVersion: 1
+      providers:
+        - name: community
+          orgId: 1
+          folder: Community
+          type: file
+          disableDeletion: false
+          editable: true
+          options:
+            path: /var/lib/grafana/dashboards/community
+
+  dashboards:
+    community:
+      argocd:
+        gnetId: 14584
+        revision: 1
+        datasource: Prometheus
+      cert-manager:
+        gnetId: 11001
+        revision: 1
+        datasource: Prometheus
+
   # Pre-load the Loki datasource when Loki is added later
   additionalDataSources: []
 
