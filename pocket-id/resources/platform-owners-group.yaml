@@ -1,0 +1,12 @@
+# $schema: https://github.com/aclerici38/pocket-id-operator/releases/latest/download/pocketidusergroup_v1alpha1.json
+apiVersion: pocketid.internal/v1alpha1
+kind: PocketIDUserGroup
+metadata:
+  name: platform-owners
+spec:
+  friendlyName: Platform Owners
+  name: platform-owners
+  users:
+    userRefs:
+      - name: jef
+        namespace: pocket-id

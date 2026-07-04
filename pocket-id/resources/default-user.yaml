@@ -1,0 +1,16 @@
+# $schema: https://github.com/aclerici38/pocket-id-operator/releases/latest/download/pocketiduser_v1alpha1.json
+apiVersion: pocketid.internal/v1alpha1
+kind: PocketIDUser
+metadata:
+  name: jef
+spec:
+  email:
+    value: 'jefwillems100@gmail.com'
+  admin: true
+  firstName:
+    value: 'Jef'
+  lastName:
+    value: 'Willems'
+  locale: 'en'
+  username:
+    value: 'Jefwillems'
