@@ -13,6 +13,6 @@ helmCharts:
         enabled: false
 
 resources:
-  - ./bases/instance.yaml
-  - ./bases/default-user.yaml
-  - ./bases/platform-owners-group.yaml
+  - ./resources/instance.yaml
+  - ./resources/default-user.yaml
+  - ./resources/platform-owners-group.yaml
