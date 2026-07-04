@@ -16,7 +16,7 @@ spec:
     hostnames:
       - 'id.home.jef.app'
     parentRefs:
-      - name: lab-gateway
+      - name: homelab-gateway
         namespace: gateway
         group: gateway.networking.k8s.io
         kind: Gateway
