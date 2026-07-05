@@ -13,6 +13,12 @@ spec:
   analyticsDisabled: true
   route:
     enabled: true
+    annotations:
+      gethomepage.dev/description: Pocket ID authentication
+      gethomepage.dev/enabled: 'true'
+      gethomepage.dev/group: Cluster Management
+      gethomepage.dev/icon: homepage.png
+      gethomepage.dev/name: Pocket ID
     hostnames:
       - 'id.home.jef.app'
     parentRefs:

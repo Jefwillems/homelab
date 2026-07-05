@@ -1,5 +1,11 @@
 httpRoute:
   enabled: true
+  annotations:
+    gethomepage.dev/description: Jellyfin media libraries
+    gethomepage.dev/enabled: 'true'
+    gethomepage.dev/group: Media
+    gethomepage.dev/icon: jellyfin.png
+    gethomepage.dev/name: Jellyfin
   hostnames:
     - jellyfin.home.jef.app
   parentRefs:
