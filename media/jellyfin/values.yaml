@@ -1,0 +1,13 @@
+httpRoute:
+  enabled: true
+  hostnames:
+    - jellyfin.home.jef.app
+  parentRefs:
+    - name: homelab-gateway
+      namespace: gateway
+      group: gateway.networking.k8s.io
+      kind: Gateway
+metrics:
+  enabled: true
+  serviceMonitor:
+    enabled: true
