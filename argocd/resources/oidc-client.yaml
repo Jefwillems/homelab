@@ -1,0 +1,22 @@
+# $schema: https://github.com/aclerici38/pocket-id-operator/releases/latest/download/pocketidoidcclient_v1alpha1.json
+apiVersion: pocketid.internal/v1alpha1
+kind: PocketIDOIDCClient
+metadata:
+  name: argocd
+spec:
+  callbackUrls:
+    - 'https://argo.home.jef.app/auth/callback'
+  logoutCallbackUrls:
+    - 'https://argo.home.jef.app/auth/callback'
+  pkceEnabled: true
+  requiresReauthentication: false
+  launchUrl: 'https://argo.home.jef.app/'
+  secret:
+    name: argocd-oidc
+    additionalLabels:
+      app.kubernetes.io/part-of: argocd
+    keys:
+      clientID: client_id
+      clientSecret: client_secret
+      issuerUrl: issuer_url
+      discoveryUrl: discovery_url

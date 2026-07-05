@@ -3,4 +3,15 @@ kind: ConfigMap
 metadata:
   name: argocd-cm
 data:
+  # Argo CD's externally facing base URL (optional). Required when configuring SSO
+  url: https://argo.home.jef.app
+  oidc.tls.insecure.skip.verify: 'true' # until we figure out how to configure pocketId correctly with cert-manager
+  oidc.config: |
+    name: pocketId
+    issuer: $argocd-oidc:issuer_url
+    clientID: $argocd-oidc:client_id
+    clientSecret: $argocd-oidc:client_secret
+    enablePKCEAuthentication: true
+    allowedAudiences:
+      - $argocd-oidc:client_id
   kustomize.buildOptions: --load-restrictor LoadRestrictionsNone --enable-helm
