@@ -14,6 +14,7 @@ data:
   #      url: https://longhorn.my.network
   custom.css: ''
   custom.js: ''
+  proxmox.yaml: ''
   bookmarks.yaml: |
     - Developer:
         - Github:
