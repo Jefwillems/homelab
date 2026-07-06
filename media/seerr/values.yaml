@@ -1,0 +1,16 @@
+route:
+  main:
+    enabled: true
+    annotations:
+      gethomepage.dev/description: Seerr media libraries
+      gethomepage.dev/enabled: 'true'
+      gethomepage.dev/group: Media
+      gethomepage.dev/icon: sh-seerr.svg
+      gethomepage.dev/name: Seerr
+    hostnames:
+      - seerr.home.jef.app
+    parentRefs:
+      - name: homelab-gateway
+        namespace: gateway
+        group: gateway.networking.k8s.io
+        kind: Gateway
