@@ -6,7 +6,7 @@ metadata:
     gethomepage.dev/description: ArgoCD GitOps
     gethomepage.dev/enabled: 'true'
     gethomepage.dev/group: Cluster Management
-    gethomepage.dev/icon: argocd.png
+    gethomepage.dev/icon: sh-argo-cd.svg
     gethomepage.dev/name: ArgoCD
 spec:
   parentRefs:

@@ -30,7 +30,7 @@ gateway:
     gethomepage.dev/description: AdGuard DNS
     gethomepage.dev/enabled: 'true'
     gethomepage.dev/group: Cluster Management
-    gethomepage.dev/icon: adguard.png
+    gethomepage.dev/icon: sh-adguard-home.svg
     gethomepage.dev/name: AdGuard
   parentRefs:
     - name: homelab-gateway
