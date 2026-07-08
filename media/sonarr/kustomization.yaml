@@ -21,4 +21,4 @@ patches:
         value: 1
     target:
       kind: HTTPRoute
-      name: sonarr-sonarr
+      name: sonarr
