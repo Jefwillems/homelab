@@ -19,6 +19,9 @@ patches:
       - op: add
         path: /spec/rules/0/backendRefs/0/weight
         value: 1
+      - op: replace
+        path: /apiVersion
+        value: gateway.networking.k8s.io/v1
     target:
       kind: HTTPRoute
       name: radarr-radarr
