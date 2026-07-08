@@ -11,6 +11,10 @@ spec:
         key: key
   appUrl: 'https://id.jef.app'
   analyticsDisabled: true
+  persistence:
+    enabled: true
+    storageClass: local-path
+    size: 1Gi
   route:
     enabled: true
     annotations:
