@@ -5,7 +5,7 @@ route:
       gethomepage.dev/description: Torrent client
       gethomepage.dev/enabled: 'true'
       gethomepage.dev/group: Media
-      gethomepage.dev/icon: qbittorrent.png
+      gethomepage.dev/icon: sh-qbittorrent.svg
       gethomepage.dev/name: qBittorrent
     hostnames:
       - qbittorrent.home.jef.app
