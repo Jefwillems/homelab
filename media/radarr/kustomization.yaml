@@ -24,4 +24,4 @@ patches:
         value: gateway.networking.k8s.io/v1
     target:
       kind: HTTPRoute
-      name: radarr-radarr
+      name: radarr
