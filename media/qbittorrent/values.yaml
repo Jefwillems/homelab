@@ -27,11 +27,11 @@ service:
       torrent:
         enabled: true
         port: 6881
-        protocol: TCP
+        protocol: tcp
       torrent-udp:
         enabled: true
         port: 6881
-        protocol: UDP
+        protocol: udp
 
 persistence:
   config:
