@@ -25,8 +25,10 @@ spec:
                 /data/media/movies \
                 /data/downloads/torrents \
                 /data/downloads/usenet
+              chown -R 568:568 /data
+              chmod -R 775 /data
               echo "Directory structure ready:"
-              find /data -type d
+              find /data -type d -exec ls -ld {} \;
           volumeMounts:
             - name: data
               mountPath: /data
