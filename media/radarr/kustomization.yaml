@@ -21,7 +21,7 @@ patches:
         value: 1
       - op: replace
         path: /apiVersion
-        value: gateway.networking.k8s.io/v1
+        value: "gateway.networking.k8s.io/v1"
     target:
       kind: HTTPRoute
       name: radarr
