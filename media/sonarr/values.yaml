@@ -1,0 +1,41 @@
+route:
+  main:
+    enabled: true
+    annotations:
+      gethomepage.dev/description: TV show automation
+      gethomepage.dev/enabled: 'true'
+      gethomepage.dev/group: Media
+      gethomepage.dev/icon: sh-sonarr.svg
+      gethomepage.dev/name: Sonarr
+    hostnames:
+      - sonarr.home.jef.app
+    parentRefs:
+      - name: homelab-gateway
+        namespace: gateway
+        group: gateway.networking.k8s.io
+        kind: Gateway
+
+persistence:
+  config:
+    enabled: true
+    type: pvc
+    mountPath: /config
+    size: 1Gi
+    accessMode: ReadWriteOnce
+  # Media and downloads volumes need to be shared with Jellyfin and your
+  # download client. Configure these once your shared storage is in place.
+  # media:
+  #   enabled: true
+  #   type: nfs
+  #   mountPath: /data/media
+  #   server: 192.168.x.x
+  #   path: /path/to/media
+  # downloads:
+  #   enabled: true
+  #   type: nfs
+  #   mountPath: /data/downloads
+  #   server: 192.168.x.x
+  #   path: /path/to/downloads
+
+env:
+  TZ: 'Europe/Brussels'
