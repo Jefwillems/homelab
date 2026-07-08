@@ -8,7 +8,7 @@ route:
       gethomepage.dev/icon: sh-sonarr.svg
       gethomepage.dev/name: Sonarr
     hostnames:
-      - sonarr.home.jef.app
+      - sonarr.jef.app
     parentRefs:
       - name: homelab-gateway
         namespace: gateway

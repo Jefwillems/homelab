@@ -8,7 +8,7 @@ route:
       gethomepage.dev/icon: sh-seerr.svg
       gethomepage.dev/name: Seerr
     hostnames:
-      - seerr.home.jef.app
+      - seerr.jef.app
     parentRefs:
       - name: homelab-gateway
         namespace: gateway

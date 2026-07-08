@@ -38,7 +38,7 @@ gateway:
       group: gateway.networking.k8s.io
       kind: Gateway
   hostnames:
-    - adguard.home.jef.app
+    - adguard.jef.app
   path: /
   pathType: PathPrefix
 

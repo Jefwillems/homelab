@@ -7,7 +7,7 @@ httpRoute:
     gethomepage.dev/icon: jellyfin.png
     gethomepage.dev/name: Jellyfin
   hostnames:
-    - jellyfin.home.jef.app
+    - jellyfin.jef.app
   parentRefs:
     - name: homelab-gateway
       namespace: gateway

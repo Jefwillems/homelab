@@ -5,12 +5,12 @@ metadata:
   name: argocd
 spec:
   callbackUrls:
-    - 'https://argo.home.jef.app/auth/callback'
+    - 'https://argo.jef.app/auth/callback'
   logoutCallbackUrls:
-    - 'https://argo.home.jef.app/auth/callback'
+    - 'https://argo.jef.app/auth/callback'
   pkceEnabled: true
   requiresReauthentication: false
-  launchUrl: 'https://argo.home.jef.app/'
+  launchUrl: 'https://argo.jef.app/'
   secret:
     name: argocd-oidc
     additionalLabels:

@@ -8,7 +8,7 @@ route:
       gethomepage.dev/icon: sh-radarr.svg
       gethomepage.dev/name: Radarr
     hostnames:
-      - radarr.home.jef.app
+      - radarr.jef.app
     parentRefs:
       - name: homelab-gateway
         namespace: gateway

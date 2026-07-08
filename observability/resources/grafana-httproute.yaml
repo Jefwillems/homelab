@@ -16,7 +16,7 @@ spec:
       group: gateway.networking.k8s.io
       kind: Gateway
   hostnames:
-    - grafana.home.jef.app
+    - grafana.jef.app
   rules:
     - matches:
         - path:

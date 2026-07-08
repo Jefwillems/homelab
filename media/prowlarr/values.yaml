@@ -8,7 +8,7 @@ route:
       gethomepage.dev/icon: sh-prowlarr-radarr.svg
       gethomepage.dev/name: Prowlarr
     hostnames:
-      - prowlarr.home.jef.app
+      - prowlarr.jef.app
     parentRefs:
       - name: homelab-gateway
         namespace: gateway

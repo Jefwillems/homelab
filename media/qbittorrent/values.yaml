@@ -8,7 +8,7 @@ route:
       gethomepage.dev/icon: sh-qbittorrent.svg
       gethomepage.dev/name: qBittorrent
     hostnames:
-      - qbittorrent.home.jef.app
+      - qbittorrent.jef.app
     parentRefs:
       - name: homelab-gateway
         namespace: gateway

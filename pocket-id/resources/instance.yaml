@@ -9,7 +9,7 @@ spec:
       secretKeyRef:
         name: pocket-id-encryption
         key: key
-  appUrl: 'https://id.home.jef.app'
+  appUrl: 'https://id.jef.app'
   analyticsDisabled: true
   route:
     enabled: true
@@ -20,7 +20,7 @@ spec:
       gethomepage.dev/icon: homepage.png
       gethomepage.dev/name: Pocket ID
     hostnames:
-      - 'id.home.jef.app'
+      - 'id.jef.app'
     parentRefs:
       - name: homelab-gateway
         namespace: gateway

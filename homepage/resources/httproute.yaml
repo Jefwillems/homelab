@@ -15,7 +15,7 @@ spec:
       group: gateway.networking.k8s.io
       kind: Gateway
   hostnames:
-    - 'homepage.home.jef.app'
+    - 'homepage.jef.app'
   rules:
     - matches:
         - path:
