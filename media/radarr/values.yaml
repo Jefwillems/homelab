@@ -1,0 +1,32 @@
+route:
+  main:
+    enabled: true
+    annotations:
+      gethomepage.dev/description: Movie automation
+      gethomepage.dev/enabled: 'true'
+      gethomepage.dev/group: Media
+      gethomepage.dev/icon: radarr.png
+      gethomepage.dev/name: Radarr
+    hostnames:
+      - radarr.home.jef.app
+    parentRefs:
+      - name: homelab-gateway
+        namespace: gateway
+        group: gateway.networking.k8s.io
+        kind: Gateway
+
+persistence:
+  config:
+    enabled: true
+    type: pvc
+    mountPath: /config
+    size: 1Gi
+    accessMode: ReadWriteOnce
+  data:
+    enabled: true
+    type: pvc
+    existingClaim: media-data
+    mountPath: /data
+
+env:
+  TZ: 'Europe/Brussels'

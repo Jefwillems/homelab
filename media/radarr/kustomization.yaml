@@ -1,0 +1,24 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+helmCharts:
+  - name: radarr
+    releaseName: radarr
+    repo: oci://oci.trueforge.org/truecharts
+    version: 26.6.1
+    valuesFile: values.yaml
+
+patches:
+  - patch: |
+      - op: add
+        path: /spec/rules/0/backendRefs/0/kind
+        value: Service
+      - op: add
+        path: /spec/rules/0/backendRefs/0/group
+        value: ''
+      - op: add
+        path: /spec/rules/0/backendRefs/0/weight
+        value: 1
+    target:
+      kind: HTTPRoute
+      name: radarr-radarr
