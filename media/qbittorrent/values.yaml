@@ -1,0 +1,50 @@
+route:
+  main:
+    enabled: true
+    annotations:
+      gethomepage.dev/description: Torrent client
+      gethomepage.dev/enabled: 'true'
+      gethomepage.dev/group: Media
+      gethomepage.dev/icon: qbittorrent.png
+      gethomepage.dev/name: qBittorrent
+    hostnames:
+      - qbittorrent.home.jef.app
+    parentRefs:
+      - name: homelab-gateway
+        namespace: gateway
+        group: gateway.networking.k8s.io
+        kind: Gateway
+
+# Expose the BitTorrent port as a LoadBalancer so peers can reach us.
+# Pick a free IP from your Cilium pool (192.168.178.96/27).
+# Forward this same port on your router to this IP for best connectivity.
+service:
+  torrent:
+    enabled: true
+    type: LoadBalancer
+    loadBalancerIP: '192.168.178.113'
+    ports:
+      torrent:
+        enabled: true
+        port: 6881
+        protocol: TCP
+      torrent-udp:
+        enabled: true
+        port: 6881
+        protocol: UDP
+
+persistence:
+  config:
+    enabled: true
+    type: pvc
+    mountPath: /config
+    size: 1Gi
+    accessMode: ReadWriteOnce
+  data:
+    enabled: true
+    type: pvc
+    existingClaim: media-data
+    mountPath: /data
+
+env:
+  TZ: 'Europe/Brussels'
