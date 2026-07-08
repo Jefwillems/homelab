@@ -15,23 +15,12 @@ route:
         group: gateway.networking.k8s.io
         kind: Gateway
 
-# Expose the BitTorrent port as a LoadBalancer so peers can reach us.
-# Pick a free IP from your Cilium pool (192.168.178.96/27).
-# Forward this same port on your router to this IP for best connectivity.
+# Promote the chart's built-in torrent service to LoadBalancer.
+# The chart already defines 6881 TCP+UDP — only the type and IP need overriding.
 service:
   torrent:
-    enabled: true
     type: LoadBalancer
     loadBalancerIP: '192.168.178.113'
-    ports:
-      torrent:
-        enabled: true
-        port: 6881
-        protocol: tcp
-      torrent-udp:
-        enabled: true
-        port: 6881
-        protocol: udp
 
 persistence:
   config:
