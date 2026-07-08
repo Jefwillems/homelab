@@ -22,20 +22,11 @@ persistence:
     mountPath: /config
     size: 1Gi
     accessMode: ReadWriteOnce
-  # Media and downloads volumes need to be shared with Jellyfin and your
-  # download client. Configure these once your shared storage is in place.
-  # media:
-  #   enabled: true
-  #   type: nfs
-  #   mountPath: /data/media
-  #   server: 192.168.x.x
-  #   path: /path/to/media
-  # downloads:
-  #   enabled: true
-  #   type: nfs
-  #   mountPath: /data/downloads
-  #   server: 192.168.x.x
-  #   path: /path/to/downloads
+  data:
+    enabled: true
+    type: pvc
+    existingClaim: media-data
+    mountPath: /data
 
 env:
   TZ: 'Europe/Brussels'

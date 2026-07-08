@@ -17,3 +17,7 @@ metrics:
   enabled: true
   serviceMonitor:
     enabled: true
+persistence:
+  media:
+    existingClaim: media-data
+    mountPath: /data

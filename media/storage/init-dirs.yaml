@@ -1,0 +1,36 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: media-init-dirs
+  namespace: media
+  annotations:
+    # Re-run by deleting the Job if the directory structure needs to be recreated.
+    argocd.argoproj.io/hook: PostSync
+    argocd.argoproj.io/hook-delete-policy: HookSucceeded
+spec:
+  template:
+    spec:
+      restartPolicy: OnFailure
+      nodeSelector:
+        kubernetes.io/hostname: homelab-controlplane
+      containers:
+        - name: init-dirs
+          image: busybox:1.37
+          command:
+            - sh
+            - -c
+            - |
+              mkdir -p \
+                /data/media/tv \
+                /data/media/movies \
+                /data/downloads/torrents \
+                /data/downloads/usenet
+              echo "Directory structure ready:"
+              find /data -type d
+          volumeMounts:
+            - name: data
+              mountPath: /data
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: media-data
