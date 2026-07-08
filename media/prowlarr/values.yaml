@@ -2,13 +2,13 @@ route:
   main:
     enabled: true
     annotations:
-      gethomepage.dev/description: Movie automation
+      gethomepage.dev/description: Indexer manager
       gethomepage.dev/enabled: 'true'
       gethomepage.dev/group: Media
-      gethomepage.dev/icon: sh-radarr.svg
-      gethomepage.dev/name: Radarr
+      gethomepage.dev/icon: sh-prowlarr-radarr.svg
+      gethomepage.dev/name: Prowlarr
     hostnames:
-      - radarr.home.jef.app
+      - prowlarr.home.jef.app
     parentRefs:
       - name: homelab-gateway
         namespace: gateway
@@ -22,11 +22,6 @@ persistence:
     mountPath: /config
     size: 1Gi
     accessMode: ReadWriteOnce
-  data:
-    enabled: true
-    type: pvc
-    existingClaim: media-data
-    mountPath: /data
 
 env:
   TZ: 'Europe/Brussels'
