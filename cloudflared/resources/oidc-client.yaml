@@ -1,0 +1,17 @@
+# $schema: https://github.com/aclerici38/pocket-id-operator/releases/latest/download/pocketidoidcclient_v1alpha1.json
+apiVersion: pocketid.internal/v1alpha1
+kind: PocketIDOIDCClient
+metadata:
+  name: cloudflare-access
+spec:
+  callbackUrls:
+    - 'https://jefapp.cloudflareaccess.com/cdn-cgi/access/callback'
+  pkceEnabled: true
+  requiresReauthentication: false
+  secret:
+    name: cloudflare-access-oidc
+    keys:
+      clientID: client_id
+      clientSecret: client_secret
+      issuerUrl: issuer_url
+      discoveryUrl: discovery_url
