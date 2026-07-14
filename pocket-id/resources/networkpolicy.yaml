@@ -50,6 +50,14 @@ spec:
     - toEntities:
         - kube-apiserver
 
+    # Pocket ID operator needs HTTPS egress (e.g. OCI registry, update checks)
+    - toEntities:
+        - world
+      toPorts:
+        - ports:
+            - port: '443'
+              protocol: TCP
+
     # Intra-namespace: operator ↔ Pocket ID pod communication
     - toEndpoints:
         - matchLabels:
