@@ -38,6 +38,7 @@ hubble:
       - flow
       - port-distribution
       - icmp
+      - http
     serviceMonitor:
       enabled: true
       trustCRDsExist: true
