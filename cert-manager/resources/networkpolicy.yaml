@@ -1,0 +1,43 @@
+# $schema: https://raw.githubusercontent.com/datreeio/CRDs-catalog/refs/heads/main/cilium.io/ciliumnetworkpolicy_v2.json
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: cert-manager
+  namespace: cert-manager
+  description: >-
+    Default-deny policy for the cert-manager namespace.
+    cert-manager requires egress to the internet for Let's Encrypt ACME
+    challenges and the Cloudflare DNS API, egress to kube-apiserver for
+    certificate management, and ingress from kube-apiserver for the
+    admission webhook on port 10250.
+spec:
+  endpointSelector:
+    matchLabels:
+      k8s:io.kubernetes.pod.namespace: cert-manager
+
+  ingress:
+    # kube-apiserver calls the cert-manager admission webhook on port 10250
+    - fromEntities:
+        - kube-apiserver
+      toPorts:
+        - ports:
+            - port: '10250'
+              protocol: TCP
+
+    # Allow Prometheus (observability namespace) to scrape metrics on any port
+    - fromEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: observability
+
+  egress:
+    # Let's Encrypt ACME endpoints and Cloudflare DNS API (both HTTPS)
+    - toEntities:
+        - world
+      toPorts:
+        - ports:
+            - port: '443'
+              protocol: TCP
+
+    # cert-manager watches and updates Kubernetes resources via kube-apiserver
+    - toEntities:
+        - kube-apiserver

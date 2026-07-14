@@ -1,0 +1,65 @@
+# $schema: https://raw.githubusercontent.com/datreeio/CRDs-catalog/refs/heads/main/cilium.io/ciliumnetworkpolicy_v2.json
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: pocket-id
+  namespace: pocket-id
+  description: >-
+    Default-deny policy for the pocket-id namespace.
+    Pocket ID is the cluster OIDC provider. It accepts OIDC requests on port
+    1411 from the Cilium Gateway (external UI/login), ArgoCD (token exchange),
+    and cloudflared (Cloudflare Access authentication). The pocket-id operator
+    requires egress to kube-apiserver for CRD management, and intra-namespace
+    traffic allows the operator to communicate with the Pocket ID pod.
+spec:
+  endpointSelector:
+    matchLabels:
+      k8s:io.kubernetes.pod.namespace: pocket-id
+
+  ingress:
+    # Cilium Gateway routes external OIDC/UI requests to Pocket ID
+    - fromEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: gateway
+      toPorts:
+        - ports:
+            - port: '1411'
+              protocol: TCP
+
+    # ArgoCD OIDC token exchange
+    - fromEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: argocd
+      toPorts:
+        - ports:
+            - port: '1411'
+              protocol: TCP
+
+    # cloudflared Cloudflare Access OIDC authentication
+    - fromEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: cloudflared
+      toPorts:
+        - ports:
+            - port: '1411'
+              protocol: TCP
+
+    # Allow Prometheus (observability namespace) to scrape metrics on any port
+    - fromEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: observability
+
+    # Intra-namespace: operator ↔ Pocket ID pod communication
+    - fromEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: pocket-id
+
+  egress:
+    # Pocket ID operator manages CRDs and resources via kube-apiserver
+    - toEntities:
+        - kube-apiserver
+
+    # Intra-namespace: operator ↔ Pocket ID pod communication
+    - toEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: pocket-id

@@ -1,0 +1,60 @@
+# $schema: https://raw.githubusercontent.com/datreeio/CRDs-catalog/refs/heads/main/cilium.io/ciliumnetworkpolicy_v2.json
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: adguard
+  namespace: adguard
+  description: >-
+    Default-deny policy for the adguard namespace.
+    AdGuard Home serves as the cluster's local DNS resolver (port 53 TCP/UDP)
+    for LAN devices, exposes a web UI (port 80) reached via the Cilium Gateway,
+    and exposes its API on port 80 for external-dns DNS rewrite management.
+    Upstream DNS resolution is performed via DNS-over-HTTPS to public resolvers
+    (1.1.1.1, 8.8.8.8) on port 443.
+spec:
+  endpointSelector:
+    matchLabels:
+      k8s:io.kubernetes.pod.namespace: adguard
+
+  ingress:
+    # LAN devices use AdGuard Home as their DNS resolver (LoadBalancer VIP)
+    - fromEntities:
+        - world
+      toPorts:
+        - ports:
+            - port: '53'
+              protocol: TCP
+            - port: '53'
+              protocol: UDP
+
+    # Cilium Gateway routes web UI traffic to AdGuard Home
+    - fromEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: gateway
+      toPorts:
+        - ports:
+            - port: '80'
+              protocol: TCP
+
+    # external-dns calls the AdGuard Home API to manage DNS rewrites
+    - fromEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: external-dns
+      toPorts:
+        - ports:
+            - port: '80'
+              protocol: TCP
+
+    # Allow Prometheus (observability namespace) to scrape metrics on any port
+    - fromEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: observability
+
+  egress:
+    # Upstream DNS-over-HTTPS to Cloudflare (1.1.1.1) and Google (8.8.8.8)
+    - toEntities:
+        - world
+      toPorts:
+        - ports:
+            - port: '443'
+              protocol: TCP

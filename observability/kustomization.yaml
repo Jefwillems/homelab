@@ -15,3 +15,4 @@ helmCharts:
 resources:
   - resources/namespace.yaml
   - resources/grafana-httproute.yaml
+  - resources/networkpolicy.yaml

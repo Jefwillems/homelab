@@ -1,0 +1,38 @@
+# $schema: https://raw.githubusercontent.com/datreeio/CRDs-catalog/refs/heads/main/cilium.io/ciliumnetworkpolicy_v2.json
+apiVersion: cilium.io/v2
+kind: CiliumClusterWideNetworkPolicy
+metadata:
+  name: baseline
+spec:
+  description: >
+    Cluster-wide baseline applied to every pod. Grants the minimum required
+    for any pod to function: DNS resolution, kubelet health probes, and
+    kube-apiserver access for service accounts. L7 visibility for Hubble
+    is layered on top of these allow rules.
+  endpointSelector: {}
+  # ── INGRESS ──────────────────────────────────────────────────────────────
+  ingress:
+    # Kubelet liveness/readiness probes originate from the node itself.
+    - fromEntities:
+        - host
+        - remote-node
+
+  # ── EGRESS ───────────────────────────────────────────────────────────────
+  egress:
+    # CoreDNS (kube-dns) — every pod needs cluster DNS.
+    - toEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: kube-system
+            k8s:k8s-app: kube-dns
+      toPorts:
+        - ports:
+            - port: '53'
+              protocol: ANY
+          rules:
+            dns:
+              - matchPattern: '*'
+
+    # Kubernetes API server — needed by operators, controllers, and any pod
+    # that mounts a service account token and uses it.
+    - toEntities:
+        - kube-apiserver

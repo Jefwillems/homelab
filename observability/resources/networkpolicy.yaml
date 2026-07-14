@@ -1,0 +1,61 @@
+# $schema: https://raw.githubusercontent.com/datreeio/CRDs-catalog/refs/heads/main/cilium.io/ciliumnetworkpolicy_v2.json
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: observability
+  namespace: observability
+  description: >-
+    Default-deny policy for the observability namespace.
+    Grafana accepts ingress from gateway (port 80) and queries Prometheus
+    internally. Prometheus accepts ingress from Grafana and Alertmanager, and
+    requires broad egress to all cluster pods on any port for metrics scraping
+    across every namespace, plus kube-apiserver egress for Kubernetes service
+    discovery. Alertmanager accepts ingress from Prometheus and needs egress to
+    world for webhook/notification delivery. Grafana also needs egress to world
+    for plugin downloads.
+spec:
+  endpointSelector:
+    matchLabels:
+      k8s:io.kubernetes.pod.namespace: observability
+
+  ingress:
+    # Intra-namespace: grafana→prometheus, prometheus→alertmanager,
+    # prometheus→node-exporter/kube-state-metrics, etc.
+    - fromEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: observability
+
+    # Gateway routes external traffic to Grafana UI, Prometheus, and Alertmanager
+    - fromEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: gateway
+      toPorts:
+        - ports:
+            - port: '80' # grafana
+              protocol: TCP
+            - port: '9090' # prometheus
+              protocol: TCP
+            - port: '9093' # alertmanager
+              protocol: TCP
+
+  egress:
+    # Intra-namespace: grafana→prometheus, prometheus→alertmanager, etc.
+    - toEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: observability
+
+    # Prometheus scrapes metrics from pods across ALL namespaces on any port
+    - toEntities:
+        - cluster
+
+    # Grafana plugin/dashboard downloads; alertmanager webhook notifications
+    - toEntities:
+        - world
+      toPorts:
+        - ports:
+            - port: '443'
+              protocol: TCP
+
+    # Prometheus Kubernetes service discovery and pod/endpoint watches
+    - toEntities:
+        - kube-apiserver

@@ -9,3 +9,6 @@ helmCharts:
     valuesFile: values/cilium.yaml
     includeCRDs: true
     namespace: kube-system
+
+resources:
+  - resources/networkpolicy.yaml

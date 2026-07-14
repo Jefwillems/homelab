@@ -1,0 +1,45 @@
+# $schema: https://raw.githubusercontent.com/datreeio/CRDs-catalog/refs/heads/main/cilium.io/ciliumnetworkpolicy_v2.json
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: gateway
+  namespace: gateway
+  description: >-
+    Default-deny policy for the Cilium Gateway namespace.
+    Allows inbound HTTP/HTTPS from the internet, metrics scraping from the
+    observability namespace, and egress to all cluster pods (for routing),
+    kube-apiserver (for Gateway API controller), and world (for health-check
+    callbacks to Cloudflare).
+spec:
+  endpointSelector:
+    matchLabels:
+      k8s:io.kubernetes.pod.namespace: gateway
+
+  ingress:
+    # Accept HTTP and HTTPS from the internet (Cloudflare edge / L2 LB VIP)
+    - fromEntities:
+        - world
+      toPorts:
+        - ports:
+            - port: '80'
+              protocol: TCP
+            - port: '443'
+              protocol: TCP
+
+    # Allow Prometheus (observability namespace) to scrape metrics on any port
+    - fromEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: observability
+
+  egress:
+    # Route traffic to any pod in the cluster (backend services in all namespaces)
+    - toEntities:
+        - cluster
+
+    # Gateway API controller needs access to kube-apiserver
+    - toEntities:
+        - kube-apiserver
+
+    # Health-check callbacks / origin-pull responses to Cloudflare (world)
+    - toEntities:
+        - world

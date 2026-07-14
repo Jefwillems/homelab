@@ -1,0 +1,44 @@
+# $schema: https://raw.githubusercontent.com/datreeio/CRDs-catalog/refs/heads/main/cilium.io/ciliumnetworkpolicy_v2.json
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: cloudflared
+  namespace: cloudflared
+  description: >-
+    Default-deny policy for the cloudflared tunnel namespace.
+    cloudflared makes outbound connections to Cloudflare edge (TCP 443 and
+    UDP 7844) and routes inbound Cloudflare Access traffic to internal
+    cluster services. No direct ingress from the internet is required.
+spec:
+  endpointSelector:
+    matchLabels:
+      k8s:io.kubernetes.pod.namespace: cloudflared
+
+  ingress:
+    # Allow Prometheus (observability namespace) to scrape the metrics endpoint
+    - fromEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: observability
+      toPorts:
+        - ports:
+            - port: '2000'
+              protocol: TCP
+
+    # Allow kubelet health probes from the host node
+    - fromEntities:
+        - host
+
+  egress:
+    # Cloudflare edge: HTTPS control-plane and QUIC tunnel traffic
+    - toEntities:
+        - world
+      toPorts:
+        - ports:
+            - port: '443'
+              protocol: TCP
+            - port: '7844'
+              protocol: UDP
+
+    # Forward tunnelled requests to any backend service in the cluster
+    - toEntities:
+        - cluster
