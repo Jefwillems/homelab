@@ -17,15 +17,6 @@ spec:
       k8s:io.kubernetes.pod.namespace: pocket-id
 
   ingress:
-    # Cilium Gateway routes external OIDC/UI requests to Pocket ID.
-    # Traffic through the Cilium Gateway API is classified as the 'ingress' entity.
-    - fromEntities:
-        - ingress
-      toPorts:
-        - ports:
-            - port: '1411'
-              protocol: TCP
-
     # ArgoCD OIDC token exchange
     - fromEndpoints:
         - matchLabels:

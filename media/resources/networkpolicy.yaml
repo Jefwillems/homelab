@@ -24,27 +24,6 @@ spec:
         - matchLabels:
             k8s:io.kubernetes.pod.namespace: media
 
-    # Gateway (Cilium Gateway API) routes external traffic to each media service.
-    # Traffic through the Cilium Gateway API is classified as the 'ingress' entity.
-    - fromEntities:
-        - ingress
-      toPorts:
-        - ports:
-            - port: '80' # seerr
-              protocol: TCP
-            - port: '6767' # bazarr
-              protocol: TCP
-            - port: '7878' # radarr
-              protocol: TCP
-            - port: '8096' # jellyfin
-              protocol: TCP
-            - port: '8989' # sonarr
-              protocol: TCP
-            - port: '9696' # prowlarr
-              protocol: TCP
-            - port: '10095' # qbittorrent web UI
-              protocol: TCP
-
     # Prometheus scrapes dedicated metrics endpoints for each service
     - fromEndpoints:
         - matchLabels:

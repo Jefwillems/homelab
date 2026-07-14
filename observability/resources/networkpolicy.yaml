@@ -25,19 +25,6 @@ spec:
         - matchLabels:
             k8s:io.kubernetes.pod.namespace: observability
 
-    # Gateway routes external traffic to Grafana UI, Prometheus, and Alertmanager.
-    # Traffic through the Cilium Gateway API is classified as the 'ingress' entity.
-    - fromEntities:
-        - ingress
-      toPorts:
-        - ports:
-            - port: '80' # grafana
-              protocol: TCP
-            - port: '9090' # prometheus
-              protocol: TCP
-            - port: '9093' # alertmanager
-              protocol: TCP
-
   egress:
     # Intra-namespace: grafana→prometheus, prometheus→alertmanager, etc.
     - toEndpoints:

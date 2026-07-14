@@ -17,15 +17,6 @@ spec:
       k8s:io.kubernetes.pod.namespace: homepage
 
   ingress:
-    # Cilium Gateway routes external traffic to the Homepage dashboard.
-    # Traffic through the Cilium Gateway API is classified as the 'ingress' entity.
-    - fromEntities:
-        - ingress
-      toPorts:
-        - ports:
-            - port: '3000'
-              protocol: TCP
-
     # Allow Prometheus (observability namespace) to scrape metrics on any port
     - fromEndpoints:
         - matchLabels:

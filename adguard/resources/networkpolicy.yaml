@@ -27,15 +27,6 @@ spec:
             - port: '53'
               protocol: UDP
 
-    # Cilium Gateway routes web UI traffic to AdGuard Home.
-    # Traffic through the Cilium Gateway API is classified as the 'ingress' entity.
-    - fromEntities:
-        - ingress
-      toPorts:
-        - ports:
-            - port: '80'
-              protocol: TCP
-
     # external-dns calls the AdGuard Home API to manage DNS rewrites
     - fromEndpoints:
         - matchLabels:

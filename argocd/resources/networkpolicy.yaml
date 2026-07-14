@@ -18,16 +18,6 @@ spec:
       k8s:io.kubernetes.pod.namespace: argocd
 
   ingress:
-    # Cilium Gateway routes external UI traffic to the ArgoCD server (HTTP).
-    # Traffic through the Cilium Gateway API is classified as the 'ingress'
-    # reserved entity by the cilium.l7policy filter in the gateway Envoy.
-    - fromEntities:
-        - ingress
-      toPorts:
-        - ports:
-            - port: '80'
-              protocol: TCP
-
     # Allow Prometheus (observability namespace) to scrape ArgoCD metrics endpoints
     - fromEndpoints:
         - matchLabels:
