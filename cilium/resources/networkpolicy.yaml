@@ -17,6 +17,14 @@ spec:
         - host
         - remote-node
 
+    # Allow traffic forwarded by the Cilium Gateway (Gateway API / Envoy).
+    # The cilium.l7policy filter inside the gateway Envoy enforces network
+    # policies using the *original* client identity, so backends would block
+    # all external requests. Allowing the 'ingress' reserved entity here
+    # grants gateway-forwarded traffic access to all pods cluster-wide.
+    - fromEntities:
+        - ingress
+
     # Allow any cluster pod to send DNS queries to CoreDNS on port 53.
     # This is required because the CCNP puts CoreDNS itself into enforcement
     # mode (endpointSelector: {} matches all pods), so without an explicit

@@ -17,10 +17,10 @@ spec:
       k8s:io.kubernetes.pod.namespace: homepage
 
   ingress:
-    # Cilium Gateway routes external traffic to the Homepage dashboard
-    - fromEndpoints:
-        - matchLabels:
-            k8s:io.kubernetes.pod.namespace: gateway
+    # Cilium Gateway routes external traffic to the Homepage dashboard.
+    # Traffic through the Cilium Gateway API is classified as the 'ingress' entity.
+    - fromEntities:
+        - ingress
       toPorts:
         - ports:
             - port: '3000'

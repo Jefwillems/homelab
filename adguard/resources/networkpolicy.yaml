@@ -27,10 +27,10 @@ spec:
             - port: '53'
               protocol: UDP
 
-    # Cilium Gateway routes web UI traffic to AdGuard Home
-    - fromEndpoints:
-        - matchLabels:
-            k8s:io.kubernetes.pod.namespace: gateway
+    # Cilium Gateway routes web UI traffic to AdGuard Home.
+    # Traffic through the Cilium Gateway API is classified as the 'ingress' entity.
+    - fromEntities:
+        - ingress
       toPorts:
         - ports:
             - port: '80'
