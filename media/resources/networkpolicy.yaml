@@ -4,6 +4,7 @@ kind: CiliumNetworkPolicy
 metadata:
   name: media
   namespace: media
+spec:
   description: >-
     Default-deny policy for the media namespace.
     Allows intra-namespace service communication (seerr→jellyfin/radarr/sonarr,
@@ -12,7 +13,6 @@ metadata:
     from the observability namespace on dedicated metrics ports, and egress to
     world on HTTPS (443) for metadata fetching (TMDB, TVDB, subtitle providers,
     etc.) and port 6881 TCP+UDP for qbittorrent torrent peer connections.
-spec:
   endpointSelector:
     matchLabels:
       k8s:io.kubernetes.pod.namespace: media

@@ -4,6 +4,7 @@ kind: CiliumNetworkPolicy
 metadata:
   name: adguard
   namespace: adguard
+spec:
   description: >-
     Default-deny policy for the adguard namespace.
     AdGuard Home serves as the cluster's local DNS resolver (port 53 TCP/UDP)
@@ -11,7 +12,6 @@ metadata:
     and exposes its API on port 80 for external-dns DNS rewrite management.
     Upstream DNS resolution is performed via DNS-over-HTTPS to public resolvers
     (1.1.1.1, 8.8.8.8) on port 443.
-spec:
   endpointSelector:
     matchLabels:
       k8s:io.kubernetes.pod.namespace: adguard

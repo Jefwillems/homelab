@@ -4,12 +4,12 @@ kind: CiliumNetworkPolicy
 metadata:
   name: cloudflared
   namespace: cloudflared
+spec:
   description: >-
     Default-deny policy for the cloudflared tunnel namespace.
     cloudflared makes outbound connections to Cloudflare edge (TCP 443 and
     UDP 7844) and routes inbound Cloudflare Access traffic to internal
     cluster services. No direct ingress from the internet is required.
-spec:
   endpointSelector:
     matchLabels:
       k8s:io.kubernetes.pod.namespace: cloudflared

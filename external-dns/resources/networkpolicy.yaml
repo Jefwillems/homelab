@@ -4,12 +4,12 @@ kind: CiliumNetworkPolicy
 metadata:
   name: external-dns
   namespace: external-dns
+spec:
   description: >-
     Default-deny policy for the external-dns namespace.
     external-dns watches Kubernetes HTTPRoute resources via kube-apiserver
     and pushes DNS rewrites to AdGuard Home in the adguard namespace on
     port 80. Metrics are exposed on port 7979.
-spec:
   endpointSelector:
     matchLabels:
       k8s:io.kubernetes.pod.namespace: external-dns

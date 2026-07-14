@@ -4,13 +4,13 @@ kind: CiliumNetworkPolicy
 metadata:
   name: gateway
   namespace: gateway
+spec:
   description: >-
     Default-deny policy for the Cilium Gateway namespace.
     Allows inbound HTTP/HTTPS from the internet, metrics scraping from the
     observability namespace, and egress to all cluster pods (for routing),
     kube-apiserver (for Gateway API controller), and world (for health-check
     callbacks to Cloudflare).
-spec:
   endpointSelector:
     matchLabels:
       k8s:io.kubernetes.pod.namespace: gateway

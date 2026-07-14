@@ -4,6 +4,7 @@ kind: CiliumNetworkPolicy
 metadata:
   name: pocket-id
   namespace: pocket-id
+spec:
   description: >-
     Default-deny policy for the pocket-id namespace.
     Pocket ID is the cluster OIDC provider. It accepts OIDC requests on port
@@ -11,7 +12,6 @@ metadata:
     and cloudflared (Cloudflare Access authentication). The pocket-id operator
     requires egress to kube-apiserver for CRD management, and intra-namespace
     traffic allows the operator to communicate with the Pocket ID pod.
-spec:
   endpointSelector:
     matchLabels:
       k8s:io.kubernetes.pod.namespace: pocket-id

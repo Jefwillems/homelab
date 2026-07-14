@@ -4,6 +4,7 @@ kind: CiliumNetworkPolicy
 metadata:
   name: local-path-provisioner
   namespace: local-path-storage
+spec:
   description: >-
     Default-deny policy for the local-path-provisioner namespace.
     local-path-provisioner watches PersistentVolumeClaims and manages
@@ -11,7 +12,6 @@ metadata:
     operations which require access to the host. No inbound service traffic is
     expected; ingress is limited to kubelet health probes from the host and
     optional Prometheus scraping from the observability namespace.
-spec:
   endpointSelector:
     matchLabels:
       k8s:io.kubernetes.pod.namespace: local-path-storage

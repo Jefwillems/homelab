@@ -4,13 +4,13 @@ kind: CiliumNetworkPolicy
 metadata:
   name: cert-manager
   namespace: cert-manager
+spec:
   description: >-
     Default-deny policy for the cert-manager namespace.
     cert-manager requires egress to the internet for Let's Encrypt ACME
     challenges and the Cloudflare DNS API, egress to kube-apiserver for
     certificate management, and ingress from kube-apiserver for the
     admission webhook on port 10250.
-spec:
   endpointSelector:
     matchLabels:
       k8s:io.kubernetes.pod.namespace: cert-manager

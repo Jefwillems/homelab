@@ -4,6 +4,7 @@ kind: CiliumNetworkPolicy
 metadata:
   name: argocd
   namespace: argocd
+spec:
   description: >-
     Default-deny policy for the argocd namespace.
     ArgoCD requires ingress from the Cilium Gateway for the web UI (port 80),
@@ -12,7 +13,6 @@ metadata:
     the internet for git operations (codeberg.org, OIDC discovery), to
     pocket-id for OIDC token exchange, to kube-apiserver for cluster resource
     management, and intra-namespace for internal component communication.
-spec:
   endpointSelector:
     matchLabels:
       k8s:io.kubernetes.pod.namespace: argocd

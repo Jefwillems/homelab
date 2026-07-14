@@ -4,6 +4,7 @@ kind: CiliumNetworkPolicy
 metadata:
   name: observability
   namespace: observability
+spec:
   description: >-
     Default-deny policy for the observability namespace.
     Grafana accepts ingress from gateway (port 80) and queries Prometheus
@@ -13,7 +14,6 @@ metadata:
     discovery. Alertmanager accepts ingress from Prometheus and needs egress to
     world for webhook/notification delivery. Grafana also needs egress to world
     for plugin downloads.
-spec:
   endpointSelector:
     matchLabels:
       k8s:io.kubernetes.pod.namespace: observability

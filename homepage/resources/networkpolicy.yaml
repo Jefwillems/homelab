@@ -4,6 +4,7 @@ kind: CiliumNetworkPolicy
 metadata:
   name: homepage
   namespace: homepage
+spec:
   description: >-
     Default-deny policy for the homepage namespace.
     Homepage is a self-hosted dashboard with widgets that poll every internal
@@ -11,7 +12,6 @@ metadata:
     Cilium Gateway on port 3000, metrics scraping from observability, egress to
     all cluster pods on any port (for service widgets), and egress to the
     internet on port 443 for any widgets that fetch external data.
-spec:
   endpointSelector:
     matchLabels:
       k8s:io.kubernetes.pod.namespace: homepage
