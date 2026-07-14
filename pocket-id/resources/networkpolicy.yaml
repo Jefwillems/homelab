@@ -17,23 +17,16 @@ spec:
       k8s:io.kubernetes.pod.namespace: pocket-id
 
   ingress:
-    # ArgoCD OIDC token exchange
+    # ArgoCD OIDC token exchange — no toPorts so cilium.l7policy
+    # sees this as an all-port BPF-level rule regardless of gateway port
     - fromEndpoints:
         - matchLabels:
             k8s:io.kubernetes.pod.namespace: argocd
-      toPorts:
-        - ports:
-            - port: '1411'
-              protocol: TCP
 
-    # cloudflared Cloudflare Access OIDC authentication
+    # cloudflared Cloudflare Access OIDC authentication — same reasoning
     - fromEndpoints:
         - matchLabels:
             k8s:io.kubernetes.pod.namespace: cloudflared
-      toPorts:
-        - ports:
-            - port: '1411'
-              protocol: TCP
 
     # Allow Prometheus (observability namespace) to scrape metrics on any port
     - fromEndpoints:
