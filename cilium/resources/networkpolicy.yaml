@@ -1,4 +1,4 @@
-# $schema: https://raw.githubusercontent.com/datreeio/CRDs-catalog/refs/heads/main/cilium.io/ciliumnetworkpolicy_v2.json
+# $schema: https://raw.githubusercontent.com/datreeio/CRDs-catalog/refs/heads/main/cilium.io/ciliumclusterwidenetworkpolicy_v2.json
 apiVersion: cilium.io/v2
 kind: CiliumClusterwideNetworkPolicy
 metadata:
@@ -16,6 +16,17 @@ spec:
     - fromEntities:
         - host
         - remote-node
+
+    # Allow any cluster pod to send DNS queries to CoreDNS on port 53.
+    # This is required because the CCNP puts CoreDNS itself into enforcement
+    # mode (endpointSelector: {} matches all pods), so without an explicit
+    # ingress rule CoreDNS would drop queries from cluster pods.
+    - fromEntities:
+        - cluster
+      toPorts:
+        - ports:
+            - port: '53'
+              protocol: ANY
 
   # ── EGRESS ───────────────────────────────────────────────────────────────
   egress:
