@@ -39,6 +39,10 @@ spec:
   # ── EGRESS ───────────────────────────────────────────────────────────────
   egress:
     # CoreDNS (kube-dns) — every pod needs cluster DNS.
+    # L7 DNS rules are intentionally omitted: adding 'rules: dns' enables
+    # Cilium's L7 proxy for all endpoints, which causes the gateway Envoy's
+    # cilium.l7policy filter to strictly enforce ingress policies and block
+    # external traffic to all backends. Plain L4 is sufficient here.
     - toEndpoints:
         - matchLabels:
             k8s:io.kubernetes.pod.namespace: kube-system
@@ -47,9 +51,6 @@ spec:
         - ports:
             - port: '53'
               protocol: ANY
-          rules:
-            dns:
-              - matchPattern: '*'
 
     # Kubernetes API server — needed by operators, controllers, and any pod
     # that mounts a service account token and uses it.
