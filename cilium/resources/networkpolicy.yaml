@@ -7,8 +7,16 @@ spec:
   description: >
     Cluster-wide baseline applied to every pod. Grants the minimum required
     for any pod to function: DNS resolution, kubelet health probes, and
-    kube-apiserver access for service accounts. L7 visibility for Hubble
-    is layered on top of these allow rules.
+    kube-apiserver access for service accounts.
+
+    IMPORTANT — cilium.l7policy and the Cilium Gateway:
+    The gateway Envoy contains a cilium.l7policy filter that enforces network
+    policies. It uses the *original* client's security identity (not the
+    proxy's) when checking the backend's ingress policy. LAN clients are
+    classified as 'world'. Therefore:
+      - ingress must include 'world' so gateway-forwarded requests are allowed
+      - egress must include 'cluster' so the gateway can reach all backends
+    Both rules are required; removing either breaks all gateway routes.
   endpointSelector: {}
   # ── INGRESS ──────────────────────────────────────────────────────────────
   ingress:
@@ -17,18 +25,21 @@ spec:
         - host
         - remote-node
 
-    # Allow traffic forwarded by the Cilium Gateway (Gateway API / Envoy).
-    # The cilium.l7policy filter inside the gateway Envoy enforces network
-    # policies using the *original* client identity, so backends would block
-    # all external requests. Allowing the 'ingress' reserved entity here
-    # grants gateway-forwarded traffic access to all pods cluster-wide.
+    # Allow traffic from the Cilium Gateway (ingress entity).
     - fromEntities:
         - ingress
 
+    # Allow external (LAN / internet) traffic. Required because the
+    # cilium.l7policy filter in the gateway Envoy checks the original client
+    # identity (world) against every backend's ingress policy. Without this
+    # rule all gateway-forwarded requests would be denied with 403.
+    - fromEntities:
+        - world
+
     # Allow any cluster pod to send DNS queries to CoreDNS on port 53.
-    # This is required because the CCNP puts CoreDNS itself into enforcement
-    # mode (endpointSelector: {} matches all pods), so without an explicit
-    # ingress rule CoreDNS would drop queries from cluster pods.
+    # The CCNP puts CoreDNS itself into enforcement mode (endpointSelector: {}
+    # matches all pods), so an explicit ingress rule is needed or CoreDNS
+    # will drop queries from other pods.
     - fromEntities:
         - cluster
       toPorts:
@@ -39,10 +50,10 @@ spec:
   # ── EGRESS ───────────────────────────────────────────────────────────────
   egress:
     # CoreDNS (kube-dns) — every pod needs cluster DNS.
-    # L7 DNS rules are intentionally omitted: adding 'rules: dns' enables
-    # Cilium's L7 proxy for all endpoints, which causes the gateway Envoy's
-    # cilium.l7policy filter to strictly enforce ingress policies and block
-    # external traffic to all backends. Plain L4 is sufficient here.
+    # L7 DNS rules ('rules: dns') are intentionally omitted: they enable
+    # Cilium's L7 proxy cluster-wide, which causes the gateway Envoy's
+    # cilium.l7policy filter to enforce policies even more strictly and
+    # block traffic to backends. Plain L4 is sufficient.
     - toEndpoints:
         - matchLabels:
             k8s:io.kubernetes.pod.namespace: kube-system
@@ -52,10 +63,10 @@ spec:
             - port: '53'
               protocol: ANY
 
-    # Allow egress to all cluster pods. The cilium.l7policy filter inside the
-    # gateway Envoy enforces the gateway's OWN egress policy when forwarding
-    # requests to backends. Without this rule the gateway would be unable to
-    # reach any backend service and would return 403 for all requests.
+    # Allow egress to all cluster pods. The cilium.l7policy filter in the
+    # gateway Envoy enforces the gateway's own egress policy when forwarding
+    # requests to backends. Without this rule the gateway cannot reach any
+    # backend service.
     - toEntities:
         - cluster
 
