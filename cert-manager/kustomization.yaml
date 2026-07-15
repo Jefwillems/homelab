@@ -13,4 +13,3 @@ helmCharts:
 
 resources:
   - resources/cluster-issuer.yaml
-  - resources/networkpolicy.yaml

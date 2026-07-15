@@ -16,4 +16,3 @@ resources:
   - ./resources/instance.yaml
   - ./resources/default-user.yaml
   - ./resources/platform-owners-group.yaml
-  - ./resources/networkpolicy.yaml

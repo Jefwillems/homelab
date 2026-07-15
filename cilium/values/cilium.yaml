@@ -1,9 +1,5 @@
 kubeProxyReplacement: true
 
-# Start with 'default': only pods that have a CiliumNetworkPolicy are
-# enforced; kube-system pods (CoreDNS, Cilium itself) stay default-allow.
-# Switch to 'always' once all namespace policies have been verified.
-policyEnforcementMode: default
 l2announcements:
   enabled: true
 ipam:

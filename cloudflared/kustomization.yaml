@@ -6,4 +6,3 @@ namespace: cloudflared
 resources:
   - resources/deployment.yaml
   - resources/oidc-client.yaml
-  - resources/networkpolicy.yaml

@@ -7,7 +7,6 @@ resources:
   - resources/httproute.yaml
   - resources/servicemonitor.yaml
   - resources/oidc-client.yaml
-  - resources/networkpolicy.yaml
 
 patches:
   - path: overlays/argocd-cm.yaml

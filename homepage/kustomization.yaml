@@ -11,4 +11,3 @@ resources:
   - resources/service.yaml
   - resources/deployment.yaml
   - resources/httproute.yaml
-  - resources/networkpolicy.yaml

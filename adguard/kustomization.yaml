@@ -32,6 +32,3 @@ patches:
     target:
       kind: HTTPRoute
       name: adguard-home-adguard-home
-
-resources:
-  - resources/networkpolicy.yaml
