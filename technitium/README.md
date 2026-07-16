@@ -54,6 +54,47 @@ in the UI and persisted to the PVC):
 4. Point your router/DHCP DNS option at `192.168.178.249` and verify clients.
 5. Once stable, remove the AdGuard app and free `192.168.178.250`.
 
+## Internal DNS records via external-dns (RFC2136)
+
+`external-dns` publishes `*.jef.app` records for gateway HTTPRoutes into Technitium
+using **RFC2136 dynamic updates** (TSIG-secured), giving split-horizon DNS: LAN
+clients resolve `*.jef.app` to the gateway LB IP `192.168.178.224`, while the
+public/cloudflare side is untouched.
+
+One-time Technitium setup (web console -> after first login):
+
+1. **Create the zone.** Zones -> Add Zone -> `jef.app`, type **Primary**.
+2. **Create a TSIG key.** Settings -> TSIG -> Add:
+   - Key Name: `externaldns`
+   - Algorithm: `HMAC-SHA256`
+   - Shared Secret: click generate; copy the base64 value.
+3. **Allow dynamic updates.** Zones -> `jef.app` -> Options -> Dynamic Updates:
+   set to **Allow (using TSIG)** and add the `externaldns` key (leave network ACL
+   empty / any).
+4. **Allow zone transfer (AXFR).** Same Options dialog -> Zone Transfer: **Allow
+   (using TSIG)** and add the `externaldns` key (external-dns lists records via
+   `--rfc2136-tsig-axfr`).
+
+Then create the TSIG secret in the `external-dns` namespace (kept out of git):
+
+```sh
+kubectl -n external-dns create secret generic technitium-rfc2136 \
+  --from-literal=tsig-secret='<base64-shared-secret-from-step-2>'
+```
+
+The external-dns config lives in `apps/external-dns/base/values.yaml` (provider
+`rfc2136`, host `technitium-dns.technitium.svc.cluster.local:53`, zone `jef.app`,
+key `externaldns`, alg `hmac-sha256`). After ArgoCD syncs and the secret exists,
+verify from a LAN client:
+
+```sh
+dig @192.168.178.249 grafana.jef.app    # -> 192.168.178.224 (gateway)
+```
+
+> Because `jef.app` becomes a Primary (authoritative) zone on Technitium, any
+> `*.jef.app` name NOT managed by external-dns returns NXDOMAIN to LAN clients.
+> That's the intended split-horizon behaviour for an internally-managed domain.
+
 ## Notes
 
 - The Deployment sets **no CPU limit** (only a memory limit) on purpose: DNS is
