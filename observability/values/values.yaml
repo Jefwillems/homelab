@@ -61,8 +61,15 @@ grafana:
         revision: 1
         datasource: Prometheus
 
-  # Pre-load the Loki datasource when Loki is added later
-  additionalDataSources: []
+  # Loki datasource (logs). Prometheus is provisioned by the chart as default.
+  additionalDataSources:
+    - name: Loki
+      type: loki
+      uid: loki
+      access: proxy
+      url: http://loki-gateway.observability.svc.cluster.local
+      jsonData:
+        maxLines: 1000
 
 # ── Prometheus ─────────────────────────────────────────────────────────────────
 prometheus:

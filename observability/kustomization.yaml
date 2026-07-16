@@ -11,6 +11,18 @@ helmCharts:
     namespace: observability
     valuesFile: values/values.yaml
     includeCRDs: true
+  - name: loki
+    repo: https://grafana-community.github.io/helm-charts
+    version: '18.5.0'
+    releaseName: loki
+    namespace: observability
+    valuesFile: values/loki.yaml
+  - name: alloy
+    repo: https://grafana.github.io/helm-charts
+    version: '1.10.1'
+    releaseName: alloy
+    namespace: observability
+    valuesFile: values/alloy.yaml
 
 resources:
   - resources/namespace.yaml
