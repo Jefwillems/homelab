@@ -1,0 +1,29 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: technitium
+  annotations:
+    gethomepage.dev/description: Technitium DNS
+    gethomepage.dev/enabled: 'true'
+    gethomepage.dev/group: Cluster Management
+    gethomepage.dev/icon: sh-technitium.svg
+    gethomepage.dev/name: Technitium
+spec:
+  parentRefs:
+    - name: homelab-gateway
+      namespace: gateway
+      group: gateway.networking.k8s.io
+      kind: Gateway
+  hostnames:
+    - technitium.jef.app
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - name: technitium-web
+          port: 5380
+          group: ''
+          kind: Service
+          weight: 1

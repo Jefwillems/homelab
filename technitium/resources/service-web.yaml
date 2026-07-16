@@ -1,0 +1,16 @@
+# Admin web console (5380). Kept in-cluster; exposed over HTTPS via the gateway.
+apiVersion: v1
+kind: Service
+metadata:
+  name: technitium-web
+  labels:
+    app.kubernetes.io/name: technitium
+spec:
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/name: technitium
+  ports:
+    - name: web
+      port: 5380
+      targetPort: web
+      protocol: TCP

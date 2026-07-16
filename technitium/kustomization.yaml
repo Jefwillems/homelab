@@ -1,0 +1,12 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: technitium
+
+resources:
+  - resources/namespace.yaml
+  - resources/pvc.yaml
+  - resources/deployment.yaml
+  - resources/service-dns.yaml
+  - resources/service-web.yaml
+  - resources/httproute.yaml
