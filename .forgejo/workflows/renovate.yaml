@@ -38,8 +38,7 @@ jobs:
           RENOVATE_AUTODISCOVER: 'false'
           RENOVATE_REPOSITORIES: 'Jefwillems/homelab'
           RENOVATE_GIT_AUTHOR: 'Renovate Bot <renovate-bot@jef.app>'
-          # 'null' = normal run; 'full' = dry run (only when triggered manually).
-          RENOVATE_DRY_RUN: ${{ inputs.dryRun == 'true' && 'full' || 'null' }}
+          RENOVATE_DRY_RUN: ${{ inputs.dryRun == 'true' }}
           # Optional: a github.com read-only token avoids rate limits when fetching
           # release notes/changelogs. Store as a secret named GITHUB_COM_TOKEN.
           GITHUB_COM_TOKEN: ${{ secrets.GH_TOKEN }}
