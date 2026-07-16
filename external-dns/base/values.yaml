@@ -4,8 +4,6 @@ sources:
 provider:
   name: rfc2136
 
-policy: sync
-
 extraArgs:
   # Send updates to the Technitium DNS service (both UDP+TCP 53 exposed).
   - --rfc2136-host=technitium-dns.technitium.svc.cluster.local
