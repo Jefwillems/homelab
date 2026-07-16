@@ -99,8 +99,57 @@ alertmanager:
             requests:
               storage: 1Gi
 
+    # Mounts Secret "alertmanager-discord" at
+    # /etc/alertmanager/secrets/alertmanager-discord/. Create it out-of-band:
+    #   kubectl create secret generic alertmanager-discord \
+    #     --from-literal=webhook-url="$DISCORD_WEBHOOK_URL" -n observability
+    # (see README). Keeping the URL in a Secret avoids committing it to git.
+    secrets:
+      - alertmanager-discord
+
   service:
     type: ClusterIP
+
+  # Full Alertmanager configuration. Replaces the chart's default null route so
+  # the built-in Prometheus/node alert rules are actually delivered.
+  config:
+    global:
+      resolve_timeout: 5m
+    route:
+      # Group related alerts into a single notification.
+      group_by: ['alertname', 'namespace']
+      group_wait: 30s
+      group_interval: 5m
+      repeat_interval: 4h
+      receiver: discord-warning
+      routes:
+        # Watchdog is an always-firing dead-man's switch — swallow it locally.
+        # (Phase 6: forward to an external heartbeat monitor instead.)
+        - receiver: 'null'
+          matchers:
+            - alertname = "Watchdog"
+        # Critical alerts get their own receiver (own channel/mention).
+        - receiver: discord-critical
+          matchers:
+            - severity = "critical"
+    # Silence warning-level noise for a resource that already has a critical
+    # alert firing, to cut duplicate pages.
+    inhibit_rules:
+      - source_matchers:
+          - severity = "critical"
+        target_matchers:
+          - severity = "warning"
+        equal: ['alertname', 'namespace']
+    receivers:
+      - name: 'null'
+      - name: discord-critical
+        discord_configs:
+          - webhook_url_file: /etc/alertmanager/secrets/alertmanager-discord/webhook-url
+            send_resolved: true
+      - name: discord-warning
+        discord_configs:
+          - webhook_url_file: /etc/alertmanager/secrets/alertmanager-discord/webhook-url
+            send_resolved: true
 
 # ── Node Exporter ──────────────────────────────────────────────────────────────
 # hostRootFsMount must be disabled on Talos — the root filesystem is immutable
