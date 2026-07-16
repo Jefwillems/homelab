@@ -1,0 +1,25 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    ":dependencyDashboard",
+    ":semanticCommitsDisabled"
+  ],
+  "timezone": "Etc/UTC",
+  "dependencyDashboardTitle": "Renovate Dashboard",
+  "kubernetes": {
+    "managerFilePatterns": ["**/resources/*.yaml", "**/resources/*.yml"]
+  },
+  "packageRules": [
+    {
+      "description": "Group every update per top-level directory, which maps 1:1 to an Argo app / namespace (app-of-apps.yaml directory generator).",
+      "matchFileNames": ["**"],
+      "groupName": "{{packageFileDir}}"
+    },
+    {
+      "description": "The 'media' directory is a single Argo app / namespace that aggregates several sub-apps (sonarr, radarr, jellyfin, ...). Group them into one PR.",
+      "matchFileNames": ["media/**"],
+      "groupName": "media"
+    }
+  ]
+}

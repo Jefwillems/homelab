@@ -13,6 +13,8 @@ spec:
         revision: HEAD
         directories:
           - path: '*'
+          - path: '.forgejo'
+            exclude: true
   template:
     metadata:
       name: '{{ .path.basename }}-app'
