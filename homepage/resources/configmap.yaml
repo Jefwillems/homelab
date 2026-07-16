@@ -9,23 +9,15 @@ data:
     mode: cluster
     gateway: true
   settings.yaml: ''
-  #settings.yaml: |
-  #  providers:
-  #    longhorn:
-  #      url: https://longhorn.my.network
   custom.css: ''
   custom.js: ''
   proxmox.yaml: ''
   bookmarks.yaml: |
     - Developer:
-        - Github:
-            - abbr: GH
-              href: https://github.com/
-  services.yaml: |
-    - My First Group:
-        - My First Service:
-            href: http://localhost/
-            description: Homepage is awesome
+        - Homelab repository:
+            - abbr: CB
+              href: https://codeberg.org/
+  services.yaml: ''
   widgets.yaml: |
     - kubernetes:
         cluster:

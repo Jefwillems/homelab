@@ -23,7 +23,7 @@ spec:
       gethomepage.dev/description: Pocket ID authentication
       gethomepage.dev/enabled: 'true'
       gethomepage.dev/group: Cluster Management
-      gethomepage.dev/icon: homepage.png
+      gethomepage.dev/icon: sh-pocket-id.svg
       gethomepage.dev/name: Pocket ID
     hostnames:
       - 'id.jef.app'
