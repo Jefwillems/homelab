@@ -9,3 +9,4 @@ helmCharts:
     releaseName: forgejo-runner
     valuesFile: values/values.yaml
     version: 0.7.6
+    namespace: ci
