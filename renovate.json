@@ -7,6 +7,8 @@
   ],
   "timezone": "Etc/UTC",
   "dependencyDashboardTitle": "Renovate Dashboard",
+  "prHourlyLimit": 0,
+  "prConcurrentLimit": 0,
   "kubernetes": {
     "managerFilePatterns": ["**/resources/*.yaml", "**/resources/*.yml"]
   },
