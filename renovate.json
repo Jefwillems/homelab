@@ -22,6 +22,11 @@
       "description": "The 'media' directory is a single Argo app / namespace that aggregates several sub-apps (sonarr, radarr, jellyfin, ...). Group them into one PR.",
       "matchFileNames": ["media/**"],
       "groupName": "media"
+    },
+    {
+      "description": "exportarr (bundled by the TrueCharts *arr charts) advertises a container-registry sourceUrl, so Renovate can't fetch its changelog. Point it at the real GitHub repo.",
+      "matchPackageNames": ["ghcr.io/onedr0p/exportarr"],
+      "sourceUrl": "https://github.com/onedr0p/exportarr"
     }
   ]
 }

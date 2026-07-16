@@ -1,0 +1,32 @@
+# Cert #1 (kubelet serving cert): kubelets run with rotate-server-certificates
+# and the kubelet-serving-cert-approver signs/approves their CSRs against the
+# cluster CA, so metrics-server can verify them WITHOUT --kubelet-insecure-tls.
+# metrics-server trusts the cluster CA from its in-cluster config automatically.
+
+# Cert #2 (aggregation API serving cert): issued by cert-manager using the
+# internal `metrics-server-ca` ClusterIssuer (defined in apps/cert-manager).
+# ca-injector fills in the APIService caBundle, so we can disable insecure skip.
+tls:
+  type: cert-manager
+  certManager:
+    addInjectorAnnotations: true
+    existingIssuer:
+      enabled: true
+      kind: ClusterIssuer
+      name: metrics-server-ca
+
+apiService:
+  create: true
+  insecureSkipTLSVerify: false
+
+# Expose metrics-server's own metrics to the Prometheus stack in apps/observability
+# (Prometheus discovers ServiceMonitors cluster-wide).
+metrics:
+  enabled: true
+serviceMonitor:
+  enabled: true
+
+resources:
+  requests:
+    cpu: 50m
+    memory: 100Mi

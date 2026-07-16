@@ -51,7 +51,7 @@ spec:
                       name: renovate-secret
                       key: RENOVATE_TOKEN
                 # Optional github.com read-only token to avoid changelog rate limits.
-                - name: GITHUB_COM_TOKEN
+                - name: RENOVATE_GITHUB_COM_TOKEN
                   valueFrom:
                     secretKeyRef:
                       name: renovate-secret

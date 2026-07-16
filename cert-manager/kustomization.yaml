@@ -13,3 +13,4 @@ helmCharts:
 
 resources:
   - resources/cluster-issuer.yaml
+  - resources/metrics-server-ca.yaml
