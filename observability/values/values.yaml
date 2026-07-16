@@ -91,6 +91,8 @@ prometheus:
 # ── Alertmanager ───────────────────────────────────────────────────────────────
 alertmanager:
   alertmanagerSpec:
+    # Public URL (via the gateway HTTPRoute) so generated links resolve correctly.
+    externalUrl: https://alertmanager.jef.app
     storage:
       volumeClaimTemplate:
         spec:

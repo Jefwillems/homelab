@@ -1,0 +1,30 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: alertmanager
+  namespace: observability
+  annotations:
+    gethomepage.dev/description: Alertmanager
+    gethomepage.dev/enabled: 'true'
+    gethomepage.dev/group: Cluster Management
+    gethomepage.dev/icon: sh-grafana-alerts-dashboard.svg
+    gethomepage.dev/name: Alertmanager
+spec:
+  parentRefs:
+    - name: homelab-gateway
+      namespace: gateway
+      group: gateway.networking.k8s.io
+      kind: Gateway
+  hostnames:
+    - alertmanager.jef.app
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - name: kube-prometheus-stack-alertmanager
+          port: 9093
+          group: ''
+          kind: Service
+          weight: 1
