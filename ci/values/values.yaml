@@ -1,3 +1,7 @@
+# The wrenix forgejo-runner chart is sunset; the chart aborts rendering unless you
+# explicitly acknowledge you are on its last released version.
+knownLastVersion: true
+
 runner:
   config:
     existingInitSecret: forgejo-actions-secret
