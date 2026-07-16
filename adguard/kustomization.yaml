@@ -6,7 +6,7 @@ namespace: adguard
 helmCharts:
   - name: adguard-home
     repo: oci://ghcr.io/helmforgedev/helm
-    version: 1.4.11
+    version: 1.4.13
     valuesFile: values/values.yaml
     includeCRDs: true
     releaseName: adguard-home
