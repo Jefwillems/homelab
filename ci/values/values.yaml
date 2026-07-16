@@ -1,0 +1,7 @@
+runner:
+  config:
+    existingInitSecret: forgejo-actions-secret
+    file:
+      runner:
+        labels:
+          - homelab-runner
