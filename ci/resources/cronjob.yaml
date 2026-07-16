@@ -63,9 +63,3 @@ spec:
                   memory: 256Mi
                 limits:
                   memory: 1Gi
-              volumeMounts:
-                - name: tmp
-                  mountPath: /tmp
-          volumes:
-            - name: tmp
-              emptyDir: {}
