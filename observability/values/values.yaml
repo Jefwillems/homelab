@@ -2,6 +2,8 @@
 grafana:
   enabled: true
 
+  defaultDashboardsTimezone: Europe/Brussels
+
   # Create a Secret named "grafana-admin-secret" in the observability namespace
   # with keys admin-user and admin-password before deploying.
   admin:
@@ -74,6 +76,11 @@ grafana:
 # ── Prometheus ─────────────────────────────────────────────────────────────────
 prometheus:
   prometheusSpec:
+    # Public URL (via the gateway HTTPRoute) so the "Source" links on alerts
+    # (Prometheus generatorURL) resolve to something reachable off-cluster
+    # instead of the internal service DNS name.
+    externalUrl: https://prometheus.jef.app
+
     retention: 15d
 
     storageSpec:

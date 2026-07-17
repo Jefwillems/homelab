@@ -28,4 +28,5 @@ resources:
   - resources/namespace.yaml
   - resources/grafana-httproute.yaml
   - resources/alertmanager-httproute.yaml
+  - resources/prometheus-httproute.yaml
   - resources/alertmanager-config.yaml
