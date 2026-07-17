@@ -58,7 +58,7 @@ grafana:
       enabled: true
       name: Pocket ID
       icon: signin
-      allow_sign_up: false
+      allow_sign_up: true
       auto_login: false
       scopes: openid email profile groups
       use_pkce: true
