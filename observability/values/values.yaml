@@ -70,7 +70,7 @@ grafana:
       role_attribute_path: contains(groups[*], 'platform-owners') && 'Admin' || 'Viewer'
       allow_assign_grafana_admin: true
 
-  # Sidecar watches for ConfigMaps labelled grafana_dashboard="1" across all
+  # Sidecar watches for ConfigMaps labeled grafana_dashboard="1" across all
   # namespaces and hot-loads them into Grafana automatically.
   # Cilium/Hubble dashboards are created by the Cilium chart using this label.
   sidecar:
