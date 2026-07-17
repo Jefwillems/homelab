@@ -19,6 +19,32 @@ grafana:
   service:
     type: ClusterIP
 
+  # OIDC wiring pulled from the operator-managed grafana-oidc secret. Grafana
+  # maps these env vars onto [auth.generic_oauth] automatically, so credentials
+  # AND the Pocket ID endpoint URLs stay out of grafana.ini/git and follow the
+  # IdP if it ever moves.
+  envValueFrom:
+    GF_AUTH_GENERIC_OAUTH_CLIENT_ID:
+      secretKeyRef:
+        name: grafana-oidc
+        key: client_id
+    GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET:
+      secretKeyRef:
+        name: grafana-oidc
+        key: client_secret
+    GF_AUTH_GENERIC_OAUTH_AUTH_URL:
+      secretKeyRef:
+        name: grafana-oidc
+        key: authorization_url
+    GF_AUTH_GENERIC_OAUTH_TOKEN_URL:
+      secretKeyRef:
+        name: grafana-oidc
+        key: token_url
+    GF_AUTH_GENERIC_OAUTH_API_URL:
+      secretKeyRef:
+        name: grafana-oidc
+        key: userinfo_url
+
   ingress:
     enabled: false
 
@@ -26,7 +52,23 @@ grafana:
     server:
       root_url: https://grafana.jef.app
     auth:
+      # Keep the local login form as a break-glass fallback alongside OIDC.
       disable_login_form: false
+    auth.generic_oauth:
+      enabled: true
+      name: Pocket ID
+      icon: signin
+      allow_sign_up: false
+      auto_login: false
+      scopes: openid email profile groups
+      use_pkce: true
+      use_refresh_token: true
+      tls_skip_verify_insecure: true
+      login_attribute_path: preferred_username
+      email_attribute_path: email
+      name_attribute_path: name
+      role_attribute_path: contains(groups[*], 'platform-owners') && 'Admin' || 'Viewer'
+      allow_assign_grafana_admin: true
 
   # Sidecar watches for ConfigMaps labelled grafana_dashboard="1" across all
   # namespaces and hot-loads them into Grafana automatically.
