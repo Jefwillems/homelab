@@ -15,7 +15,7 @@ spec:
           - path: '*'
   template:
     metadata:
-      name: '{{ .path.basename }}-app'
+      name: '{{ .path.basename }}'
     spec:
       source:
         repoURL: 'https://codeberg.org/Jefwillems/homelab'
