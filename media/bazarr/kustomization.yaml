@@ -5,7 +5,7 @@ helmCharts:
   - name: bazarr
     releaseName: bazarr
     repo: oci://oci.trueforge.org/truecharts
-    version: 24.7.0
+    version: 24.7.1
     valuesFile: values.yaml
 
 patches:
