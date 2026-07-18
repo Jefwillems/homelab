@@ -28,7 +28,6 @@ spec:
     from: willems@jef.app
     host: smtp.protonmail.ch
     port: 587
-    skipCertVerify: true
     tls: starttls
     user: willems@jef.app
     password:
