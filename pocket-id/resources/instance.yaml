@@ -17,6 +17,25 @@ spec:
     size: 1Gi
   trustedProxies:
     enabled: true
+  emailNotifications:
+    apiKeyExpiration: true
+    loginNotification: true
+    oneTimeAccessAsAdmin: true
+    verification: true
+  metrics:
+    enabled: true
+  smtp:
+    from: willems@jef.app
+    host: smtp.protonmail.ch
+    port: 587
+    skipCertVerify: true
+    tls: tls
+    user: willems@jef.app
+    password:
+      valueFrom:
+        secretKeyRef:
+          name: proton-smtp
+          key: token
   route:
     enabled: true
     annotations:
