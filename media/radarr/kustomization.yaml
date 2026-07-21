@@ -5,7 +5,7 @@ helmCharts:
   - name: radarr
     releaseName: radarr
     repo: oci://oci.trueforge.org/truecharts
-    version: 27.8.3
+    version: 27.9.0
     valuesFile: values.yaml
 
 patches:
