@@ -33,3 +33,23 @@ prometheusPort:
 couchdbConfig:
   couchdb:
     uuid: "048cadf1a06749378f899dbb5f4f86fa"
+    # Obsidian LiveSync stores notes as fairly large documents.
+    max_document_size: 50000000
+  chttpd:
+    # Require authentication for all requests, but keep /_up open so the
+    # Kubernetes liveness/readiness probes (which are unauthenticated) still pass.
+    require_valid_user: true
+    require_valid_user_except_for_up: true
+    enable_cors: true
+    max_http_request_size: 4294967296
+  chttpd_auth:
+    require_valid_user: true
+  httpd:
+    WWW-Authenticate: 'Basic realm="couchdb"'
+    enable_cors: true
+  cors:
+    origins: app://obsidian.md,capacitor://localhost,http://localhost
+    credentials: true
+    headers: accept, authorization, content-type, origin, referer
+    methods: GET, PUT, POST, HEAD, DELETE
+    max_age: 3600
