@@ -25,6 +25,12 @@ spec:
         server: https://kubernetes.default.svc
         namespace: '{{ .path.basename }}'
       project: 'default'
+      ignoreDifferences:
+        - group: apps
+          kind: StatefulSet
+          jqPathExpressions:
+            - '.spec.volumeClaimTemplates[]?.apiVersion'
+            - '.spec.volumeClaimTemplates[]?.kind'
       syncPolicy:
         automated:
           prune: true
