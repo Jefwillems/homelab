@@ -10,3 +10,18 @@ helmCharts:
     valuesFile: values.yaml
     includeCRDs: true
     releaseName: couchdb
+
+patches:
+  - target:
+      kind: StatefulSet
+      name: couchdb-couchdb
+      namespace: couchdb
+      group: apps
+      version: v1
+    patch: |
+      - op: add
+        path: /spec/volumeClaimTemplates/0/apiVersion
+        value: v1
+      - op: add
+        path: /spec/volumeClaimTemplates/0/kind
+        value: PersistentVolumeClaim
