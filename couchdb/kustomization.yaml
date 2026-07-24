@@ -10,3 +10,6 @@ helmCharts:
     valuesFile: values.yaml
     includeCRDs: true
     releaseName: couchdb
+
+resources:
+  - resources/httproute.yaml
