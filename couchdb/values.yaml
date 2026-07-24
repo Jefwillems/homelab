@@ -1,0 +1,35 @@
+autoSetup:
+  enabled: true
+  defaultDatabases:
+    - _global_changes
+    - obsidian_sync
+
+createAdminSecret: false
+extraSecretName: couchdb-credentials
+adminUsernameKey: "username"
+adminPasswordKey: "password"
+cookieAuthSecretKey: "cookieAuthSecret"
+erlangCookieKey: "erlangCookie"
+
+networkPolicy:
+  enabled: true
+
+persistentVolume:
+  enabled: true
+  annotations:
+    argocd.argoproj.io/sync-options: Delete=confirm
+  accessModes:
+    - ReadWriteOnce
+  size: 5Gi
+
+persistentVolumeClaimRetentionPolicy:
+  enabled: false
+  whenScaled: Retain
+  whenDeleted: Retain
+
+prometheusPort:
+  enabled: true
+
+couchdbConfig:
+  couchdb:
+    uuid: "048cadf1a06749378f899dbb5f4f86fa"
