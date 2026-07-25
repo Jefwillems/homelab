@@ -6,3 +6,4 @@ namespace: obsidian
 resources:
   - pvc.yaml
   - deployment.yaml
+  - cronjob.yaml

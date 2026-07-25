@@ -1,0 +1,84 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: vault-manager
+  labels:
+    app.kubernetes.io/name: vault-manager
+spec:
+  # 03:00 daily — after the user has stopped editing for the night.
+  schedule: "0 3 * * *"
+  timeZone: Europe/Brussels
+  # Never run two passes at once; a pass mutates the vault on the shared PVC.
+  concurrencyPolicy: Forbid
+  startingDeadlineSeconds: 3600
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      # One attempt per night; the CronJob retries tomorrow. Avoids burning
+      # Copilot quota on repeated failures.
+      backoffLimit: 0
+      # Hard ceiling in case the agent wedges; the app also self-limits via
+      # RUN_TIMEOUT and honours SIGTERM.
+      activeDeadlineSeconds: 3000
+      template:
+        metadata:
+          labels:
+            app.kubernetes.io/name: vault-manager
+        spec:
+          restartPolicy: Never
+          securityContext:
+            # Match the livesync-bridge uid/gid so files written by the agent on
+            # the shared local-path PVC are owned consistently and stay writable
+            # by the bridge.
+            runAsUser: 1993
+            runAsGroup: 1993
+            fsGroup: 1993
+          containers:
+            - name: vault-manager
+              # Pinned by digest for reproducibility (tag: latest). Bump when a
+              # new image is published; resolve via the CI run's digest output
+              # or `docker/registry` inspect.
+              image: ghcr.io/jefwillems/vault-manager@sha256:5546e8fd91af58339428057513bb6f5abc3f59096a33979b66ad23037b6ad5b4
+              env:
+                - name: VAULT_PATH
+                  value: /app/data/vault
+                - name: BRAINDUMP_DIR
+                  value: Braindumps
+                - name: COPILOT_MODEL
+                  value: claude-sonnet-4.5
+                - name: COPILOT_REASONING_EFFORT
+                  value: high
+                - name: RUN_TIMEOUT
+                  value: 45m
+                - name: LOG_LEVEL
+                  value: info
+                # Writable HOME/cache so the SDK can extract the embedded
+                # Copilot CLI and store session state (the image default HOME is
+                # owned by a different uid than we run as here).
+                - name: HOME
+                  value: /home/app
+                - name: XDG_CACHE_HOME
+                  value: /home/app/.cache
+                - name: COPILOT_GITHUB_TOKEN
+                  valueFrom:
+                    secretKeyRef:
+                      name: vault-manager-copilot
+                      key: token
+              resources:
+                requests:
+                  cpu: 100m
+                  memory: 256Mi
+                limits:
+                  memory: 1Gi
+              volumeMounts:
+                - name: vault-workspace
+                  mountPath: /app/data
+                - name: home
+                  mountPath: /home/app
+          volumes:
+            - name: vault-workspace
+              persistentVolumeClaim:
+                claimName: vault-workspace
+            - name: home
+              emptyDir: {}
