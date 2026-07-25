@@ -28,6 +28,15 @@ spec:
           image: ghcr.io/jefwillems/livesync-bridge@sha256:0b45103509265f1f51e0ae47b587f2fd217785e223a15f5105dc649d65715adf
           # Reads ./dat/config.json (WORKDIR /app) and writes vault files under
           # ./data (the storage peer baseDir is "data/vault/").
+          env:
+            # The storage peer watches the PVC with chokidar in polling mode.
+            # inotify doesn't cross pod mount namespaces on the local-path
+            # hostPath volume, so files written by the vault-manager CronJob are
+            # only detected by stat-polling. chokidar reads these from process.env.
+            - name: CHOKIDAR_USEPOLLING
+              value: "true"
+            - name: CHOKIDAR_INTERVAL
+              value: "10000"
           resources:
             requests:
               cpu: 50m
