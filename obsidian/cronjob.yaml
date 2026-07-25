@@ -34,12 +34,19 @@ spec:
             runAsUser: 1993
             runAsGroup: 1993
             fsGroup: 1993
+            runAsNonRoot: true
+            seccompProfile:
+              type: RuntimeDefault
           containers:
             - name: vault-manager
               # Pinned by digest for reproducibility (tag: latest). Bump when a
               # new image is published; resolve via the CI run's digest output
               # or `docker/registry` inspect.
               image: ghcr.io/jefwillems/vault-manager@sha256:5546e8fd91af58339428057513bb6f5abc3f59096a33979b66ad23037b6ad5b4
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  drop: ["ALL"]
               env:
                 - name: VAULT_PATH
                   value: /app/data/vault
@@ -47,8 +54,9 @@ spec:
                   value: Braindumps
                 - name: COPILOT_MODEL
                   value: claude-sonnet-4.5
-                - name: COPILOT_REASONING_EFFORT
-                  value: high
+                # COPILOT_REASONING_EFFORT is intentionally unset: claude-sonnet-4.5
+                # (via the Copilot API) rejects an explicit reasoning-effort value.
+                # Only set it for models that models.list reports as supporting it.
                 - name: RUN_TIMEOUT
                   value: 45m
                 - name: LOG_LEVEL
