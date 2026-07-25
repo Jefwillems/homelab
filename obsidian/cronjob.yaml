@@ -42,7 +42,7 @@ spec:
               # Pinned by digest for reproducibility (tag: latest). Bump when a
               # new image is published; resolve via the CI run's digest output
               # or `docker/registry` inspect.
-              image: ghcr.io/jefwillems/vault-manager@sha256:640c55c9c9cb1e940ab61f12c633238e71f29c540415b4fcadb76056ed920be6
+              image: ghcr.io/jefwillems/vault-manager@sha256:95aaa9b81dc7cf269b1964c7ea5496ed7eca97b604685f2934da931877623902
               securityContext:
                 allowPrivilegeEscalation: false
                 capabilities:
