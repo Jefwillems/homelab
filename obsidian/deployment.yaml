@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: livesync-bridge
+  labels:
+    app.kubernetes.io/name: livesync-bridge
+spec:
+  replicas: 1
+  # Single writer to the RWO PVC and to CouchDB: never run two pods at once.
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: livesync-bridge
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: livesync-bridge
+    spec:
+      securityContext:
+        # denoland/deno image runs as uid/gid 1993. fsGroup makes the
+        # local-path PVC group-writable so the bridge can populate the vault.
+        runAsUser: 1993
+        runAsGroup: 1993
+        fsGroup: 1993
+      containers:
+        - name: livesync-bridge
+          image: ghcr.io/jefwillems/livesync-bridge@sha256:0b45103509265f1f51e0ae47b587f2fd217785e223a15f5105dc649d65715adf
+          # Reads ./dat/config.json (WORKDIR /app) and writes vault files under
+          # ./data (the storage peer baseDir is "data/vault/").
+          resources:
+            requests:
+              cpu: 50m
+              memory: 128Mi
+            limits:
+              memory: 512Mi
+          livenessProbe:
+            # The bridge writes a heartbeat to /tmp/lsb-health.json every ~10s;
+            # a wedged event loop leaves it stale. Treat >60s old as unhealthy.
+            exec:
+              command:
+                - sh
+                - -c
+                - "test $(( $(date +%s) - $(stat -c %Y /tmp/lsb-health.json) )) -lt 60"
+            initialDelaySeconds: 30
+            periodSeconds: 30
+            failureThreshold: 3
+          volumeMounts:
+            - name: config
+              mountPath: /app/dat
+              readOnly: true
+            - name: vault-workspace
+              mountPath: /app/data
+      volumes:
+        - name: config
+          secret:
+            secretName: livesync-bridge-config
+            items:
+              - key: config.json
+                path: config.json
+        - name: vault-workspace
+          persistentVolumeClaim:
+            claimName: vault-workspace
