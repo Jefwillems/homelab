@@ -7,3 +7,4 @@ resources:
   - pvc.yaml
   - deployment.yaml
   - cronjob.yaml
+  - prometheusrule.yaml

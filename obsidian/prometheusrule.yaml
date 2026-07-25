@@ -1,0 +1,42 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: vault-manager
+  labels:
+    app.kubernetes.io/name: vault-manager
+    # Picked up cluster-wide by Prometheus (ruleSelectorNilUsesHelmValues: false).
+    release: kube-prometheus-stack
+spec:
+  groups:
+    - name: vault-manager.rules
+      rules:
+        # A nightly pass ended in a failed pod. backoffLimit is 0, so any failure
+        # is terminal for that run; the CronJob retries tomorrow. kube-state-metrics
+        # keeps the series while the Job is retained (failedJobsHistoryLimit: 3).
+        - alert: VaultManagerJobFailed
+          expr: kube_job_status_failed{namespace="obsidian", job_name=~"vault-manager.*"} > 0
+          for: 5m
+          labels:
+            severity: warning
+          annotations:
+            summary: vault-manager nightly job failed
+            description: >-
+              Job {{ $labels.job_name }} in namespace {{ $labels.namespace }} has
+              {{ $value }} failed pod(s). The braindump-processing pass did not
+              complete; check `kubectl logs job/{{ $labels.job_name }} -n obsidian`.
+
+        # The CronJob hasn't recorded a successful run in over 26h (schedule is
+        # daily at 03:00). Catches a silently non-firing or perpetually-failing
+        # cron — the more dangerous failure mode than a single visible failure.
+        - alert: VaultManagerJobMissing
+          expr: |
+            (time() - kube_cronjob_status_last_successful_time{namespace="obsidian", cronjob="vault-manager"}) > 26 * 3600
+          for: 30m
+          labels:
+            severity: warning
+          annotations:
+            summary: vault-manager has not succeeded in over 26h
+            description: >-
+              CronJob {{ $labels.cronjob }} in namespace {{ $labels.namespace }}
+              last succeeded {{ $value | humanizeDuration }} ago (expected daily).
+              The vault may be accumulating unprocessed braindumps.
