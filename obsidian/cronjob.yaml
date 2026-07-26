@@ -42,7 +42,7 @@ spec:
               # Pinned by digest for reproducibility (tag: latest). Bump when a
               # new image is published; resolve via the CI run's digest output
               # or `docker/registry` inspect.
-              image: ghcr.io/jefwillems/vault-manager@sha256:1f9ce4ef2116e132caed5ea9e0b157be2c889b6f6355dd8e9effc5c1179200bb
+              image: ghcr.io/jefwillems/vault-manager@sha256:ff901d6614a785be2c387eef54191a5b7c817151164937a59ac06d6c03b1b737
               securityContext:
                 allowPrivilegeEscalation: false
                 capabilities:
@@ -52,18 +52,6 @@ spec:
                   value: /app/data/vault
                 - name: BRAINDUMP_DIR
                   value: Braindumps
-                # Extra vault folders to pre-create beyond the built-in layout
-                # (People/Meetings/Actions/ADR/Notes/History/Archive/Braindumps).
-                # Comma-separated, vault-relative. Add a folder here AND document
-                # it in the vault's AGENTS.md to introduce a new section without
-                # rebuilding the image. Example:
-                # Extra vault folders to pre-create beyond the built-in layout
-                # (People/Meetings/Actions/ADR/Notes/History/Archive/Braindumps).
-                # Comma-separated, vault-relative. Add a folder here AND document
-                # it in the vault's AGENTS.md to introduce a new section without
-                # rebuilding the image.
-                - name: EXTRA_LAYOUT_DIRS
-                  value: "Meetings/F2F"
                 - name: COPILOT_MODEL
                   value: claude-sonnet-4.5
                 # COPILOT_REASONING_EFFORT is intentionally unset: claude-sonnet-4.5
