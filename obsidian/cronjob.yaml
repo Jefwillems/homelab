@@ -42,7 +42,7 @@ spec:
               # Pinned by digest for reproducibility (tag: latest). Bump when a
               # new image is published; resolve via the CI run's digest output
               # or `docker/registry` inspect.
-              image: ghcr.io/jefwillems/vault-manager@sha256:ff901d6614a785be2c387eef54191a5b7c817151164937a59ac06d6c03b1b737
+              image: ghcr.io/jefwillems/vault-manager@sha256:b12fbf8a8571d4a0b8e20dfac55e284fc68cd8522360f890a4c6415eebbe7e99
               securityContext:
                 allowPrivilegeEscalation: false
                 capabilities:
@@ -61,6 +61,20 @@ spec:
                   value: 45m
                 - name: LOG_LEVEL
                   value: info
+                # --- metrics -------------------------------------------------
+                # vault-manager is a short-lived Job and can't be scraped, so it
+                # pushes its run outcome to the Pushgateway in the observability
+                # namespace (Prometheus scrapes the gateway via ServiceMonitor).
+                - name: PUSHGATEWAY_URL
+                  value: http://prometheus-pushgateway.observability.svc.cluster.local:9091
+                - name: PUSHGATEWAY_JOB
+                  value: vault-manager
+                # "instance" grouping label — use the pod name so retries/parallel
+                # runs don't overwrite each other's samples on the gateway.
+                - name: INSTANCE_ID
+                  valueFrom:
+                    fieldRef:
+                      fieldPath: metadata.name
                 # Writable HOME/cache so the SDK can extract the embedded
                 # Copilot CLI and store session state (the image default HOME is
                 # owned by a different uid than we run as here).

@@ -8,3 +8,4 @@ resources:
   - deployment.yaml
   - cronjob.yaml
   - prometheusrule.yaml
+  - grafana-dashboard.yaml

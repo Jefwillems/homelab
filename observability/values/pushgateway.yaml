@@ -1,0 +1,29 @@
+# Prometheus Pushgateway — receives run metrics pushed by short-lived batch jobs
+# that Prometheus can't scrape directly (e.g. the vault-manager CronJob in the
+# obsidian namespace). Prometheus scrapes the gateway via the ServiceMonitor
+# below; kube-prometheus-stack discovers ServiceMonitors cluster-wide
+# (serviceMonitorSelectorNilUsesHelmValues: false).
+#
+# Reachable in-cluster at:
+#   http://prometheus-pushgateway.observability.svc.cluster.local:9091
+
+serviceMonitor:
+  enabled: true
+  namespace: observability
+  # Preserve the job/instance labels pushed by the client instead of overwriting
+  # them with the scrape target's labels. Essential for a pushgateway so the
+  # pushed grouping keys (job="vault-manager", instance=<pod>) survive.
+  honorLabels: true
+
+# Metrics only live in memory. That's fine here: Prometheus retains the scraped
+# history (15d), and each producer (the nightly CronJob) re-pushes on its next
+# run, so a pod restart at most drops the current sample until the next push.
+persistentVolume:
+  enabled: false
+
+resources:
+  requests:
+    cpu: 10m
+    memory: 32Mi
+  limits:
+    memory: 64Mi
