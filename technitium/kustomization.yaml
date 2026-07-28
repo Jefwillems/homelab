@@ -6,6 +6,7 @@ namespace: technitium
 resources:
   - resources/namespace.yaml
   - resources/pvc.yaml
+  - resources/oidc-client.yaml
   - resources/deployment.yaml
   - resources/service-dns.yaml
   - resources/service-web.yaml

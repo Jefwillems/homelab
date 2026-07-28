@@ -53,7 +53,7 @@ spec:
             - name: DNS_SERVER_LOG_USING_LOCAL_TIME
               value: 'true'
             - name: DNS_SERVER_SSO_ENABLED
-              value: true
+              value: 'true'
             - name: DNS_SERVER_SSO_AUTHORITY
               valueFrom:
                 secretKeyRef:
@@ -77,9 +77,9 @@ spec:
             - name: DNS_SERVER_SSO_SCOPES
               value: openid profile email
             - name: DNS_SERVER_SSO_ALLOW_SIGNUP
-              value: false
+              value: 'false'
             - name: DNS_SERVER_SSO_ALLOW_SIGNUP_ONLY_FOR_MAPPED_USERS
-              value: true
+              value: 'true'
             - name: DNS_SERVER_SSO_GROUP_MAP
               value: platform-owners:Administrators
           ports:
