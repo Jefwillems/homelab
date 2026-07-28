@@ -7,3 +7,4 @@ resources:
   - ./base/gateway.yaml
   - ./base/l2policy.yaml
   - ./base/pool.yaml
+  - ./base/networkpolicy.yaml

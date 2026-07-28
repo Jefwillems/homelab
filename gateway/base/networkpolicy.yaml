@@ -1,0 +1,16 @@
+# $schema: https://raw.githubusercontent.com/datreeio/CRDs-catalog/refs/heads/main/cilium.io/ciliumnetworkpolicy_v2.json
+apiapiVersion: "cilium.io/v2"
+kind: CiliumNetworkPolicy
+metadata:
+  name: "l7-rule"
+spec:
+  endpointSelector:
+    matchLabels:
+      app: homelab-gateway
+  ingress:
+  - toPorts:
+    - ports:
+      - port: '80'
+        protocol: TCP
+      - port: '443'
+        protocol: TCP

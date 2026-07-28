@@ -2,6 +2,8 @@ apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
 metadata:
   name: homelab-gateway
+  labels:
+    app: homelab-gateway
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-prod
 spec:
