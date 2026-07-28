@@ -27,7 +27,7 @@ spec:
           env:
             # First-boot bootstrap. Most of these are (re)applied on each start.
             - name: DNS_SERVER_DOMAIN
-              value: technitium.jef.app
+              value: dns.jef.app
             - name: DNS_SERVER_ADMIN_PASSWORD
               valueFrom:
                 secretKeyRef:
@@ -52,6 +52,36 @@ spec:
               value: https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts
             - name: DNS_SERVER_LOG_USING_LOCAL_TIME
               value: 'true'
+            - name: DNS_SERVER_SSO_ENABLED
+              value: true
+            - name: DNS_SERVER_SSO_AUTHORITY
+              valueFrom:
+                secretKeyRef:
+                  name: technitium-oidc
+                  key: issuer_url
+            - name: DNS_SERVER_SSO_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: technitium-oidc
+                  key: client_id
+            - name: DNS_SERVER_SSO_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: technitium-oidc
+                  key: client_secret
+            - name: DNS_SERVER_SSO_METADATA_ADDRESS
+              valueFrom:
+                secretKeyRef:
+                  name: technitium-oidc
+                  key: discovery_url
+            - name: DNS_SERVER_SSO_SCOPES
+              value: openid profile email
+            - name: DNS_SERVER_SSO_ALLOW_SIGNUP
+              value: false
+            - name: DNS_SERVER_SSO_ALLOW_SIGNUP_ONLY_FOR_MAPPED_USERS
+              value: true
+            - name: DNS_SERVER_SSO_GROUP_MAP
+              value: platform-owners:Administrators
           ports:
             - name: dns-udp
               containerPort: 53
