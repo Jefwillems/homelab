@@ -75,9 +75,9 @@ spec:
                   name: technitium-oidc
                   key: discovery_url
             - name: DNS_SERVER_SSO_SCOPES
-              value: openid profile email
+              value: openid profile email groups
             - name: DNS_SERVER_SSO_ALLOW_SIGNUP
-              value: 'false'
+              value: 'true'
             - name: DNS_SERVER_SSO_ALLOW_SIGNUP_ONLY_FOR_MAPPED_USERS
               value: 'true'
             - name: DNS_SERVER_SSO_GROUP_MAP
