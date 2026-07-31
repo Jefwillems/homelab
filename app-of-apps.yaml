@@ -9,7 +9,7 @@ spec:
   goTemplateOptions: ['missingkey=error']
   generators:
     - git:
-        repoURL: 'https://codeberg.org/Jefwillems/homelab'
+        repoURL: 'https://github.com/Jefwillems/homelab.git'
         revision: HEAD
         directories:
           - path: '*'
@@ -18,7 +18,7 @@ spec:
       name: '{{ .path.basename }}'
     spec:
       source:
-        repoURL: 'https://codeberg.org/Jefwillems/homelab'
+        repoURL: 'https://github.com/Jefwillems/homelab.git'
         targetRevision: HEAD
         path: '{{ .path.path }}'
       destination:
