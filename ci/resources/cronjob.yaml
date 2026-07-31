@@ -29,28 +29,22 @@ spec:
           containers:
             - name: renovate
               image: ghcr.io/renovatebot/renovate:44.4.5
-              # Repositories to manage are passed as positional args.
               args:
                 - Jefwillems/homelab
               env:
-                # Codeberg runs Forgejo; Renovate talks to its Gitea-compatible API.
                 - name: RENOVATE_PLATFORM
-                  value: forgejo
-                - name: RENOVATE_ENDPOINT
-                  value: https://codeberg.org/api/v1/
+                  value: github
                 - name: RENOVATE_AUTODISCOVER
                   value: 'false'
                 - name: RENOVATE_GIT_AUTHOR
                   value: 'Renovate Bot <renovate-bot@jef.app>'
                 - name: LOG_LEVEL
                   value: info
-                # Forgejo/Codeberg access token with repo + PR write scope.
                 - name: RENOVATE_TOKEN
                   valueFrom:
                     secretKeyRef:
                       name: renovate-secret
                       key: RENOVATE_TOKEN
-                # Optional github.com read-only token to avoid changelog rate limits.
                 - name: RENOVATE_GITHUB_COM_TOKEN
                   valueFrom:
                     secretKeyRef:

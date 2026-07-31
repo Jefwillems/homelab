@@ -5,3 +5,4 @@ namespace: ci
 
 resources:
   - resources/cronjob.yaml
+  - resources/renovate-secret.yaml
