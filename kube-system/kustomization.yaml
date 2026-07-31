@@ -4,3 +4,4 @@ kind: Kustomization
 resources:
   - cilium/
   - sealed-secrets/
+  - gateway-api-crds/
