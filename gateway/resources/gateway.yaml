@@ -8,6 +8,9 @@ metadata:
     cert-manager.io/cluster-issuer: letsencrypt-prod
 spec:
   gatewayClassName: cilium
+  allowedListeners:
+    namespaces:
+      from: All
   listeners:
     - protocol: HTTP
       name: http

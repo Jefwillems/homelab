@@ -6,6 +6,6 @@ namespace: external-dns
 helmCharts:
   - name: external-dns
     releaseName: external-dns
-    valuesFile: ./base/values.yaml
+    valuesFile: ./resources/values.yaml
     includeCRDs: true
     repo: https://kubernetes-sigs.github.io/external-dns/

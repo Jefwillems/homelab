@@ -11,3 +11,8 @@ resources:
   - resources/service-dns.yaml
   - resources/service-web.yaml
   - resources/httproute.yaml
+  - resources/udproute.yaml
+  - resources/tcproute.yaml
+  - resources/gateway.yaml
+  - resources/gatewayclass.yaml
+  - resources/gatewayclassconfig.yaml

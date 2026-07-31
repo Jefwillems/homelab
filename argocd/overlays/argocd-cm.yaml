@@ -3,7 +3,7 @@ kind: ConfigMap
 metadata:
   name: argocd-cm
 data:
-  # Argo CD's externally facing base URL (optional). Required when configuring SSO
+  # Argo CD's externally facing resources URL (optional). Required when configuring SSO
   url: 'https://argo.jef.app'
   oidc.tls.insecure.skip.verify: 'true' # until we figure out how to configure pocketId correctly with cert-manager
   oidc.config: |

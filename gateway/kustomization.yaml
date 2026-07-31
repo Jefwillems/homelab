@@ -4,6 +4,6 @@ kind: Kustomization
 namespace: gateway
 
 resources:
-  - ./base/gateway.yaml
-  - ./base/l2policy.yaml
-  - ./base/pool.yaml
+  - resources/gateway.yaml
+  - resources/l2policy.yaml
+  - resources/pool.yaml

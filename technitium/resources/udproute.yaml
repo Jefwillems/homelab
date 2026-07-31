@@ -1,0 +1,19 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: UDPRoute
+metadata:
+  name: technitium-udp
+spec:
+  parentRefs:
+    - name: dns-gateway
+      kind: Gateway
+      namespace: technitium
+      group: gateway.networking.k8s.io
+      sectionName: dns-udp
+  rules:
+    - backendRefs:
+        - name: technitium-dns
+          group: ''
+          namespace: technitium
+          kind: Service
+          port: 53
+          weight: 1
