@@ -82,7 +82,7 @@ kubectl -n external-dns create secret generic technitium-rfc2136 \
   --from-literal=tsig-secret='<base64-shared-secret-from-step-2>'
 ```
 
-The external-dns config lives in `apps/external-dns/base/values.yaml` (provider
+The external-dns config lives in `../external-dns/resources/values.yaml` (provider
 `rfc2136`, host `technitium-dns.technitium.svc.cluster.local:53`, zone `jef.app`,
 key `externaldns`, alg `hmac-sha256`). After ArgoCD syncs and the secret exists,
 verify from a LAN client:
