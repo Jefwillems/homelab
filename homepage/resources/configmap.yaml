@@ -15,8 +15,9 @@ data:
   bookmarks.yaml: |
     - Developer:
         - Homelab repository:
-            - abbr: CB
-              href: https://codeberg.org/
+            - abbr: GH
+              href: https://github.com/Jefwillems/homelab
+              icon: sh-github.svg
   services.yaml: ''
   widgets.yaml: |
     - kubernetes:
