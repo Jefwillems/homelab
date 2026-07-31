@@ -28,7 +28,7 @@ spec:
             fsGroup: 1000
           containers:
             - name: renovate
-              image: ghcr.io/renovatebot/renovate:43
+              image: ghcr.io/renovatebot/renovate:44.4.5
               # Repositories to manage are passed as positional args.
               args:
                 - Jefwillems/homelab
