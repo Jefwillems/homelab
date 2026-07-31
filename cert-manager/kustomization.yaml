@@ -6,7 +6,7 @@ namespace: cert-manager
 helmCharts:
   - name: cert-manager
     repo: oci://quay.io/jetstack/charts
-    version: v1.21.0
+    version: v1.21.1
     valuesFile: values/values.yaml
     includeCRDs: true
     releaseName: cert-manager
