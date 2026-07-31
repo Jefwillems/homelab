@@ -7,3 +7,7 @@ metrics:
     enabled: true
   dashboards:
     create: true
+    annotations:
+      grafana_dashboard: '1'
+    labels:
+      grafana_dashboard: '1'
