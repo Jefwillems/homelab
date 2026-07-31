@@ -4,10 +4,8 @@ metadata:
   name: dns-gateway
   labels:
     app: dns-gateway
-  annotations:
-    cert-manager.io/cluster-issuer: letsencrypt-prod
 spec:
-  gatewayClassName: cilium
+  gatewayClassName: cilium-dns
   addresses:
     - type: IPAddress
       value: 192.168.178.249
