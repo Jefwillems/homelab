@@ -8,7 +8,7 @@ spec:
   gatewayClassName: cilium-dns
   addresses:
     - type: IPAddress
-      value: 192.168.88.249
+      value: 192.168.99.53
   listeners:
     - name: dns-udp
       port: 53
