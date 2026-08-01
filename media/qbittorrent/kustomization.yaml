@@ -25,3 +25,10 @@ patches:
     target:
       kind: HTTPRoute
       name: qbittorrent
+  - patch: |
+      - op: add
+        path: /metadata/annotations/lbipam.cilium.io~1ips
+        value: "192.168.99.113"
+    target:
+      kind: Service
+      name: qbittorrent-torrent
