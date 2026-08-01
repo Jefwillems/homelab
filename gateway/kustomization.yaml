@@ -5,5 +5,4 @@ namespace: gateway
 
 resources:
   - resources/gateway.yaml
-  - resources/l2policy.yaml
   - resources/pool.yaml
