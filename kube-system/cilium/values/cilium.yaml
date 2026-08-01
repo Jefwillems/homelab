@@ -2,6 +2,10 @@ kubeProxyReplacement: true
 
 l2announcements:
   enabled: true
+
+bgpControlPlane:
+  enabled: true
+
 ipam:
   mode: kubernetes
 gatewayAPI:
