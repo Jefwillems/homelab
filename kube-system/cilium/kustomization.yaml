@@ -9,3 +9,8 @@ helmCharts:
     valuesFile: values/cilium.yaml
     includeCRDs: true
     namespace: kube-system
+
+resources:
+  - resources/bgpclusterconfig.yaml
+  - resources/bgppeerconfig.yaml
+  - resources/bgpadvertisement.yaml

@@ -1,0 +1,16 @@
+apiVersion: cilium.io/v2
+kind: CiliumBGPClusterConfig
+metadata:
+  name: homelab
+spec:
+  nodeSelector:
+    matchLabels: {}          # all nodes
+  bgpInstances:
+    - name: instance-65001
+      localASN: 65001
+      peers:
+        - name: mikrotik
+          peerASN: 65000
+          peerAddress: 192.168.88.1     # RB5009 LAN IP
+          peerConfigRef:
+            name: mikrotik
