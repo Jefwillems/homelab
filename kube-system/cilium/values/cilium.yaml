@@ -43,7 +43,7 @@ hubble:
       - flow
       - port-distribution
       - icmp
-      - httpV2
+      - httpV2:sourceContext=workload-name;destinationContext=reserved-identity
     serviceMonitor:
       enabled: true
       trustCRDsExist: true
