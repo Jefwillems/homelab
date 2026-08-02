@@ -36,14 +36,13 @@ hubble:
   ui:
     enabled: true
   metrics:
-    enabled:
-      - dns:query
-      - drop
-      - tcp
-      - flow
-      - port-distribution
-      - icmp
-      - httpV2:sourceContext=workload-name;destinationContext=reserved-identity
+    enabled: []
+    enableOpenMetrics: true
+    dynamic:
+      enabled: true
+      config:
+        createConfigMap: false
+        configMapName: cilium-dynamic-metrics-config
     serviceMonitor:
       enabled: true
       trustCRDsExist: true
