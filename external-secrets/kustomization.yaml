@@ -8,3 +8,6 @@ helmCharts:
     version: 2.8.0
     includeCRDs: true
     valuesFile: values.yaml
+
+resources:
+  - ./resources/secret-store.yaml
