@@ -28,7 +28,7 @@ spec:
             fsGroup: 1000
           containers:
             - name: renovate
-              image: ghcr.io/renovatebot/renovate:44.5.3
+              image: ghcr.io/renovatebot/renovate:44.10.0
               args:
                 - Jefwillems/homelab
               env:
