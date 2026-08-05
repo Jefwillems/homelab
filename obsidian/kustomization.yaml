@@ -9,3 +9,4 @@ resources:
   - cronjob.yaml
   - prometheusrule.yaml
   - grafana-dashboard.yaml
+  - obsidian-livesync-bridge-secret.yaml
