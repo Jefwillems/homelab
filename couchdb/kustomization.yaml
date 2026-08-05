@@ -13,3 +13,4 @@ helmCharts:
 
 resources:
   - resources/httproute.yaml
+  - resources/couchdb-credentials.yaml
