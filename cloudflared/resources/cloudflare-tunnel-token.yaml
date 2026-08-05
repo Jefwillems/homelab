@@ -11,6 +11,6 @@ spec:
     name: cloudflare-tunnel-token
   dataFrom:
     - find:
-        path: cloudflared
+        path: /cloudflared
         name:
           regexp: .*
