@@ -1,0 +1,16 @@
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: cloudflare-tunnel-token
+spec:
+  secretStoreRef:
+    name: infisical
+    kind: ClusterSecretStore
+  refreshPolicy: Periodic
+  target:
+    name: cloudflare-tunnel-token
+  dataFrom:
+    - find:
+        path: /cloudflared
+        name:
+          regexp: .*

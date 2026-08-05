@@ -6,3 +6,4 @@ namespace: cloudflared
 resources:
   - resources/deployment.yaml
   - resources/oidc-client.yaml
+  - resources/cloudflare-tunnel-token.yaml
