@@ -31,6 +31,11 @@ spec:
           jqPathExpressions:
             - '.spec.volumeClaimTemplates[]?.apiVersion'
             - '.spec.volumeClaimTemplates[]?.kind'
+        - group: external-secrets.io
+          kind: ExternalSecret
+          jqPathExpressions:
+            - '.spec.dataFrom[]?.find.conversionStrategy'
+            - '.spec.dataFrom[]?.find.decodingStrategy'
       syncPolicy:
         automated:
           prune: true
