@@ -7,6 +7,7 @@ route:
       gethomepage.dev/group: Media
       gethomepage.dev/icon: sh-bazarr.svg
       gethomepage.dev/name: Bazarr
+      gethomepage.dev/weight: 10
     hostnames:
       - bazarr.jef.app
     parentRefs:

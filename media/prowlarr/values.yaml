@@ -7,6 +7,7 @@ route:
       gethomepage.dev/group: Media
       gethomepage.dev/icon: sh-prowlarr-radarr.svg
       gethomepage.dev/name: Prowlarr
+      gethomepage.dev/weight: 11
     hostnames:
       - prowlarr.jef.app
     parentRefs:
