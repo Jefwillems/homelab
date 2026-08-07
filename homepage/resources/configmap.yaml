@@ -8,7 +8,17 @@ data:
   kubernetes.yaml: |
     mode: cluster
     gateway: true
-  settings.yaml: ''
+  settings.yaml: |
+    layout:
+      Media:
+        style: row
+        columns: 4
+      Utilities:
+        style: row
+        columns: 3
+      Cluster Management:
+        style: row
+        columns: 4
   custom.css: ''
   custom.js: ''
   proxmox.yaml: ''
