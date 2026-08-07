@@ -15,7 +15,7 @@ data:
         columns: 4
       Utilities:
         style: row
-        columns: 3
+        columns: 4
       Cluster Management:
         style: row
         columns: 4
