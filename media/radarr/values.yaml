@@ -7,7 +7,7 @@ route:
       gethomepage.dev/group: Media
       gethomepage.dev/icon: sh-radarr.svg
       gethomepage.dev/name: Radarr
-      gethomepage.dev/weight: 3
+      gethomepage.dev/weight: '3'
     hostnames:
       - radarr.jef.app
     parentRefs:

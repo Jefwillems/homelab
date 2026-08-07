@@ -6,7 +6,7 @@ httpRoute:
     gethomepage.dev/group: Media
     gethomepage.dev/icon: jellyfin.png
     gethomepage.dev/name: Jellyfin
-    gethomepage.dev/weight: 1
+    gethomepage.dev/weight: '1'
   hostnames:
     - jellyfin.jef.app
   parentRefs:

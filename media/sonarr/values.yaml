@@ -7,7 +7,7 @@ route:
       gethomepage.dev/group: Media
       gethomepage.dev/icon: sh-sonarr.svg
       gethomepage.dev/name: Sonarr
-      gethomepage.dev/weight: 3
+      gethomepage.dev/weight: '3'
     hostnames:
       - sonarr.jef.app
     parentRefs:

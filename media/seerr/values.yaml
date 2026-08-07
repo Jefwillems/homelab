@@ -8,7 +8,7 @@ route:
       gethomepage.dev/icon: sh-seerr.svg
       gethomepage.dev/name: Seerr
       gethomepage.dev/pod-selector: app.kubernetes.io/name=seerr-chart
-      gethomepage.dev/weight: 2
+      gethomepage.dev/weight: '2'
     hostnames:
       - seerr.jef.app
     parentRefs:
