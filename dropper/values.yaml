@@ -1,0 +1,19 @@
+httpRoute:
+  enabled: true
+  annotations:
+    gethomepage.dev/description: Dropper
+    gethomepage.dev/enabled: 'true'
+    gethomepage.dev/group: Utilities
+    gethomepage.dev/name: Dropper
+  parentRefs:
+    - name: homelab-gateway
+      namespace: gateway
+      group: gateway.networking.k8s.io
+      kind: Gateway
+  hostnames:
+    - dropper.jef.app
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
