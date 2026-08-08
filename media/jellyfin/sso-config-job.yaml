@@ -87,7 +87,8 @@ spec:
                   enableLiveTvManagement: false,
                   roleClaim: "groups",
                   oidScopes: ["groups"],
-                  defaultUsernameClaim: "preferred_username"
+                  defaultUsernameClaim: "preferred_username",
+                  schemeOverride: "https"
                 }')
 
               echo "Upserting SSO provider '$PROVIDER_NAME'..."
