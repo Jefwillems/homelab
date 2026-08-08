@@ -1,0 +1,100 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: jellyfin-sso-config
+  namespace: media
+  annotations:
+    argocd.argoproj.io/hook: PostSync
+    argocd.argoproj.io/hook-delete-policy: HookSucceeded
+spec:
+  backoffLimit: 5
+  ttlSecondsAfterFinished: 3600
+  template:
+    spec:
+      restartPolicy: OnFailure
+      containers:
+        - name: configure
+          image: alpine:3.20
+          env:
+            - name: JELLYFIN_URL
+              value: 'http://jellyfin.media.svc.cluster.local:8096'
+            - name: PROVIDER_NAME
+              value: 'pocket-id'
+            - name: JELLYFIN_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: jellyfin-api-key
+                  key: api-key
+            - name: OID_ENDPOINT
+              valueFrom:
+                secretKeyRef:
+                  name: jellyfin-oidc
+                  key: issuer_url
+            - name: OID_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: jellyfin-oidc
+                  key: client_id
+            - name: OID_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: jellyfin-oidc
+                  key: client_secret
+          command:
+            - sh
+            - -c
+            - |
+              set -eu
+              apk add --no-cache curl jq >/dev/null
+
+              # Wait for Jellyfin + SSO plugin to answer.
+              echo "Waiting for Jellyfin SSO endpoint..."
+              for i in $(seq 1 30); do
+                if curl -fsS -o /dev/null \
+                    "$JELLYFIN_URL/sso/OID/Get?api_key=$JELLYFIN_API_KEY"; then
+                  echo "Jellyfin SSO endpoint reachable."
+                  break
+                fi
+                echo "  attempt $i: not ready yet, sleeping 5s"
+                sleep 5
+                if [ "$i" = "30" ]; then
+                  echo "Jellyfin SSO endpoint never became ready" >&2
+                  exit 1
+                fi
+              done
+
+              BODY=$(jq -n \
+                --arg endpoint "$OID_ENDPOINT" \
+                --arg clientId "$OID_CLIENT_ID" \
+                --arg clientSecret "$OID_CLIENT_SECRET" \
+                '{
+                  oidEndpoint: $endpoint,
+                  oidClientId: $clientId,
+                  oidSecret: $clientSecret,
+                  enabled: true,
+                  enableAuthorization: true,
+                  enableAllFolders: true,
+                  enabledFolders: [],
+                  roles: [],
+                  adminRoles: ["platform-owners"],
+                  preserveAdminPermissions: true,
+                  enableFolderRoles: false,
+                  folderRoleMapping: [],
+                  enableLiveTvRoles: false,
+                  liveTvRoles: [],
+                  liveTvManagementRoles: [],
+                  enableLiveTv: true,
+                  enableLiveTvManagement: false,
+                  roleClaim: "groups",
+                  oidScopes: ["groups"],
+                  defaultUsernameClaim: "preferred_username"
+                }')
+
+              echo "Upserting SSO provider '$PROVIDER_NAME'..."
+              curl -fsS --show-error \
+                -X POST \
+                -H 'Content-Type: application/json' \
+                --data-raw "$BODY" \
+                "$JELLYFIN_URL/sso/OID/Add/$PROVIDER_NAME?api_key=$JELLYFIN_API_KEY"
+              echo
+              echo "Done."

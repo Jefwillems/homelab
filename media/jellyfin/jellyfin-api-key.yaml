@@ -1,0 +1,16 @@
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: jellyfin-api-key
+spec:
+  secretStoreRef:
+    name: infisical
+    kind: ClusterSecretStore
+  refreshPolicy: Periodic
+  target:
+    name: jellyfin-api-key
+  dataFrom:
+    - find:
+        path: /jellyfin
+        name:
+          regexp: api-key
