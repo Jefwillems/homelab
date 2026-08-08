@@ -31,6 +31,9 @@ spec:
               image: ghcr.io/renovatebot/renovate:44.14.10
               args:
                 - Jefwillems/homelab
+                - Jefwillems/dropper
+                - Jefwillems/vault-manager
+                - Jefwillems/livesync-bridge-image
               env:
                 - name: RENOVATE_PLATFORM
                   value: github
