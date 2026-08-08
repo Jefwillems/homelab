@@ -17,3 +17,10 @@ httpRoute:
         - path:
             type: PathPrefix
             value: /
+
+resources:
+  requests:
+    cpu: 5m
+    memory: 21Mi
+  limits:
+    memory: 64Mi
