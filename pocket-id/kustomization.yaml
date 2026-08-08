@@ -8,9 +8,7 @@ helmCharts:
     version: 0.12.2
     repo: oci://ghcr.io/aclerici38/charts
     includeCRDs: true
-    valuesInline:
-      instance:
-        enabled: false
+    valuesFile: ./values.yaml
 
 resources:
   - ./resources/instance.yaml

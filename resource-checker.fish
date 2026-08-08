@@ -63,10 +63,14 @@ end
 set -l cadv_sel "container!=\"\",container!=\"POD\",image!=\"\"$nsfilter"
 set -l ksm_sel  "container!=\"\"$nsfilter"
 
-set -l q_cpu_p95   "quantile_over_time(0.95, sum by (namespace,pod,container) (rate(container_cpu_usage_seconds_total{$cadv_sel}[5m]))[$window:5m])"
-set -l q_cpu_max   "max_over_time(sum by (namespace,pod,container) (rate(container_cpu_usage_seconds_total{$cadv_sel}[5m]))[$window:5m])"
-set -l q_mem_p95   "quantile_over_time(0.95, sum by (namespace,pod,container) (container_memory_working_set_bytes{$cadv_sel})[$window:5m])"
-set -l q_mem_max   "max_over_time(sum by (namespace,pod,container) (container_memory_working_set_bytes{$cadv_sel})[$window:5m])"
+# Filter every usage query against currently-existing containers so we don't
+# report on ghost pods whose time-series are still inside the lookback window.
+set -l live "and on (namespace,pod,container) kube_pod_container_info{$ksm_sel}"
+
+set -l q_cpu_p95   "quantile_over_time(0.95, sum by (namespace,pod,container) (rate(container_cpu_usage_seconds_total{$cadv_sel}[5m]))[$window:5m]) $live"
+set -l q_cpu_max   "max_over_time(sum by (namespace,pod,container) (rate(container_cpu_usage_seconds_total{$cadv_sel}[5m]))[$window:5m]) $live"
+set -l q_mem_p95   "quantile_over_time(0.95, sum by (namespace,pod,container) (container_memory_working_set_bytes{$cadv_sel})[$window:5m]) $live"
+set -l q_mem_max   "max_over_time(sum by (namespace,pod,container) (container_memory_working_set_bytes{$cadv_sel})[$window:5m]) $live"
 set -l q_cpu_req   "max by (namespace,pod,container) (kube_pod_container_resource_requests{resource=\"cpu\",$ksm_sel})"
 set -l q_cpu_lim   "max by (namespace,pod,container) (kube_pod_container_resource_limits{resource=\"cpu\",$ksm_sel})"
 set -l q_mem_req   "max by (namespace,pod,container) (kube_pod_container_resource_requests{resource=\"memory\",$ksm_sel})"
