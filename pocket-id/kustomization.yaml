@@ -16,3 +16,12 @@ resources:
   - ./resources/platform-owners-group.yaml
   - ./resources/pocket-id-encryption-secret.yaml
   - ./resources/proton-smtp-secret.yaml
+
+patches:
+  - patch: |
+      - op: remove
+        path: /spec/template/spec/containers/0/resources/limits/cpu
+    target:
+      kind: Deployment
+      name: pocket-id-operator
+      namespace: pocket-id
