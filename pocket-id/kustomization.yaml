@@ -16,6 +16,7 @@ resources:
   - ./resources/platform-owners-group.yaml
   - ./resources/pocket-id-encryption-secret.yaml
   - ./resources/proton-smtp-secret.yaml
+  - ./resources/primary-users.yaml
 
 patches:
   - patch: |
