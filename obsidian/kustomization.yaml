@@ -10,3 +10,4 @@ resources:
   - prometheusrule.yaml
   - grafana-dashboard.yaml
   - obsidian-livesync-bridge-secret.yaml
+  - vault-manager-copilot-secret.yaml
