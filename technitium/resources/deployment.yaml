@@ -106,10 +106,7 @@ spec:
           resources:
             requests:
               cpu: 100m
-              memory: 256Mi
-            # Intentionally NO cpu limit: DNS is latency-sensitive and a CPU
-            # limit causes CFS throttling under bursty load (the exact alert we
-            # saw on AdGuard). Memory is capped instead.
+              memory: 362Mi
             limits:
               memory: 512Mi
           volumeMounts:
