@@ -3,7 +3,6 @@ kind: Deployment
 metadata:
   name: cloudflared
 spec:
-  # Two replicas so Cloudflare load-balances across both; either can die without downtime.
   replicas: 2
   selector:
     matchLabels:
@@ -34,9 +33,15 @@ spec:
               memory: 64Mi
             limits:
               memory: 256Mi
+          startupProbe:
+            httpGet:
+              path: /ready
+              port: 2000
+            periodSeconds: 10
+            failureThreshold: 30
           livenessProbe:
             httpGet:
               path: /ready
               port: 2000
-            initialDelaySeconds: 10
             periodSeconds: 10
+            failureThreshold: 6
