@@ -13,6 +13,8 @@ spec:
         revision: HEAD
         directories:
           - path: '*'
+          - path: '1_archive'
+            exclude: true
   template:
     metadata:
       name: '{{ .path.basename }}'
