@@ -1,19 +1,20 @@
----
-apiVersion: bitnami.com/v1alpha1
-kind: SealedSecret
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
 metadata:
   name: homelab-repo
-  namespace: argocd
 spec:
-  encryptedData:
-    password: AgBrEVL8wnnenu2cL+GQLFaSo2/uYzB6l1TJhLkFoJ5cY0xeqrUKzeyyp3HNnDnzSgcBgJddcwczpOF2Jv6UEhOEprwPE2jm7HKpjNHuhMm+oL8iYdntlRU83uvDz45mMbERh98guq4nCcmbOfS91SDqVCpuJwO4M/0WPnoVq19OH30bZK48T+ojwutn/+zQg+IdfZqhxJlYdmFiPIT9rRquJolsBXGRQE2N8m6YhCrAR1SZO66vG/ZZx14j8PqAgrcNL+2g8Y47bQI27RzWlWA0XtAB0NYYo+BJvPSpMJ28p1EQ/kgMsR5QrrytMMIYdUqmnshGpOyNMW5RinVvevHYAB1a2WZ+lCKxzqczlS/3lbBdP0UdyqPmrGWrO98y4tYk9xTt3gJC5SC8GfdtGlyoq9vAc35bZnbDdUcmT39rGNoD+DDx8lkc9cKRzN+y76SiVl9jCp8zijVQtoKqHPhXFyaYGFO5aL3H6tiGTPeewdP0tC57TxYSuQs9OMVyfd3rzmDEHVQZjM1FD9rY8mNC2o8W24FFPQz6jHmx6UXedorcigAiu5qEdfdPeL0yy8nHhN6CaqzQ6nCvuarK6UWgMiShNxPW0DTcBbeJcmzBJGo0byTd1al9fqwbIl8KVLScT5Ko1c3CQ2D0agU4FDlbDQTTudrlbxVcXqYXcWJjNYB+tRkByNi70rEMh4fTI8meJHGQan+Peg8xayyQIquX2fWF+YATY6m3mQdyArZvUt5KGice987vk+tfukTP87ARruHCPaEEz8iecwqZNb/es+YvF4FuAYZhcP9+CLAciIHv7ZrsUeCffxrAiB0=
-    project: AgAS+VXAbN3K6Nc0dq/7q61JfvLnRkAWyhA5rbDYToAShOkX/bXnE71PwKjxIMLbhiNpoagH5PRPzaDdvGLpzbUvv/wcEEKBw0s324Kad+CV41gqMmJiruU9JqVLXq1zkN7IuNZcIEu5UI7wdKyjlZofWzfnvsD0Dj4ydwUQugg2hjAknaADBRsnYdjl/gJSnpZejkmrFspCAJQQTbw0ofvpo0E8MaHCyDrNmyp3++Z3errwxDFfbHoqpONwqv5dPiK9fEnlJM7DJJWFnAOGvcABUB1o3udfZ1XoqpQdz7YikSZXGzEgVkvdO3PkgkXuhWLQUfwpZWuaXgYuh8tJk4SWWdI3Xd1hVFiDC33Q0V6SPinlZ+s2rYWK2JtYjA94ibES6YA/d4TcIFSFXKudzMQeSlEV3YUEqeT+wgbQ1pLZS9QGrw4q+WW1mFSjm0TQoNZ6Qz9+XSCwoBR4j5QOaRFV3jYhzLcb2qtSevN/ZrW8rQQZ4XKTUkoJ2rHjsuhtN+WMHZO9IpexLhd0GSIFEyTWPryuBTFsGnWDbXH5CRZhbcRVJM054BxRd1joSWm1Xul3KNhsWeuz4WvbEf469RRYFEN+qDB/72xnVXj7cSFFAbie4Lyl6k6qnXiF/OMerf+2WJStnhIwJ15CXI4UoU3/k5INJxpuIROJLdSowT8J8juXn7EaLICueRe4xUJb6JOKryxZtg48
-    url: AgBlF6UAk6uvjTRK/t6NAbGtAEfUmhsRYQljvAnx356S5Ds4yixVgTwPMraBGPUx+H0vdPSyDEPhu5b1DUZGzNQe26zTA3i0mTljsLn9vp98VyXpl5YJ+zkGdTWSTdqZqXXGp6CsduEkW2fQGunbUmlS43ZVj9tlksSGBlhRxBtIXS/H/x19gc9/j6AAGB/fskGqCVrd3eoqfic+FsRAy0FjeW5pS8tkNYcYoHNpRO4NqtjKFbquakVxxdB4LQAncjJXoKdWGWc1lZIld2f2jue40lWIXrDS1QMU2/5o/52FUYfkIARW99d4z3sXJ4lYuttvPChnjwefqOBG7esd12Cd5v6sQfc3KOnTsg+4/mUoSV7CSyyFjdGedjdTWLc2BSZnXHxN28O8028W149pOjAib8HfYDFfzD/VUiGp48zdHQ+dfFlFnKmnpHyXA215tE43UAYEK495xLloiPBveVntZSuMulMo7y3CbFLu9J0rqUL6uPZGpWv7tUSpYaPr2RsMTdTq0SH8/37FsXJAq+XiN+4vD9PekQqFVsWaxUs+G0NHy/tuZCDWgWWvaqjO1g3t31wbv2f37pd4YsX7XVlks+yj6pPcsmbVPyRSl48ItVE0JN+9Os0YKXxNeWkynrq/VSIb/YC9HjJd6y/seZWzFiroJ8SxoNkeweXPkHICwOORXGREeSPmo2lmj7fHIGBTqvX7bjaok2+rvbxXDjYpe+wJQwySGu52Zxg/SrCmEjeyiOCOdu0QSQ==
-    username: AgB3ILtPIna7W2YmBGTc1ZChKgwvZ1HO+mKeSFzjFJivzwesoBR7+rgSfdwBPutoJqF6HOBBUdIAqzYhX6sazBc21ZJOBBiobMO8pi07iilTpsrGuSAh/xFZahhWeD0ip/sLCAQVy/xFr1l5+9VOl0H7gInTTJBwDB/RtLN1OwHVeJH1vGukPJt+4nD6v/nHdIOyjnv5+qiLPqHnFBZHHYgfVPCV1oO/OdupUi3r+vpiT7tRC8IuQPhqkLVuCY3lvBgqxAmGdSki0NdCOOEqswT3bu5PVU1uSV7IoxYSFuy5leejYf0xw+FKCXb3FY7gfoGLzwU1EB2yQyhzgnSJlmWd9ae7+66a3MAwG6OS1TA29zE/NjqZa1s+tys0D7FeqMMfHcImcjEuoQduSED2ejIZElfcVYen0h/AEce3ZbpsS9oPrDkuADdc8nv0VMhCN5W6qofCsavz6CWGfglo6yZ3n5s5YcaXLQX7DE7WFt4UIupW0bYsp30NMfBcwpH3aHOQpC03EDGt2HBKPvrXm3G/cLyzYCUmuVzIwM+l44f1Nf3mlvxa1lbisACMSLzU6dJYN3ksQj+J/iD0zWzY9EisJue+wJIzTJyFB5iYnq3gh1gLAgwZOoi0aZFw1kWABQHVpiT/WJ4mkmzWPwbYMUm9W3mcSwiBvZI3rKGuj6FSFdpyZDPXIxzIRsMh9OJTQaDR6KpV1TIdDw3Y
-  template:
-    metadata:
-      labels:
-        argocd.argoproj.io/secret-type: repository
-      name: homelab-repo
-      namespace: argocd
-    type: Opaque
+  secretStoreRef:
+    name: infisical
+    kind: ClusterSecretStore
+  refreshPolicy: Periodic
+  target:
+    name: homelab-repo
+  dataFrom:
+    - find:
+        path: /argocd
+        name:
+          regexp: repo_.*
+      rewrite:
+        - regexp:
+            source: "repo_(.*)"
+            target: "$1"
