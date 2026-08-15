@@ -9,3 +9,6 @@ helmCharts:
     version: 1.13.2
     valuesFile: values.yaml
     releaseName: houndarr
+
+resources:
+  - httproute.yaml

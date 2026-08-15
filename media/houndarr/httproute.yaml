@@ -18,7 +18,7 @@ spec:
             type: PathPrefix
             value: /
       backendRefs:
-        - name: houndarr
+        - name: houndarr-web
           port: 8877
           group: ''
           kind: Service
