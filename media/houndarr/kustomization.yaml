@@ -8,3 +8,4 @@ helmCharts:
     repo: oci://ghcr.io/av1155/charts
     version: 1.13.2
     valuesFile: values.yaml
+    releaseName: houndarr
