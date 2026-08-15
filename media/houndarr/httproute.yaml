@@ -3,7 +3,12 @@ kind: HTTPRoute
 metadata:
   name: houndarr
   annotations:
-    gethomepage.dev/enabled: 'false'
+    gethomepage.dev/description: Houndarr
+    gethomepage.dev/enabled: 'true'
+    gethomepage.dev/group: Media
+    gethomepage.dev/icon: sh-houndarr.webp
+    gethomepage.dev/name: Houndarr
+    gethomepage.dev/pod-selector: app.kubernetes.io/name=houndarr
 spec:
   parentRefs:
     - name: homelab-gateway
