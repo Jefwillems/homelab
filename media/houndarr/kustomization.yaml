@@ -6,5 +6,5 @@ namespace: media
 helmCharts:
   - name: houndarr
     repo: oci://ghcr.io/av1155/charts
-    version: 1.4.0
+    version: 1.13.2
     valuesFile: values.yaml
