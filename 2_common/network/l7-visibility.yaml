@@ -21,3 +21,6 @@ spec:
               - matchPattern: '*'
     - toEntities:
         - all
+  ingress:
+  - fromEntities:
+    - all
