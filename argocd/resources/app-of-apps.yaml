@@ -15,14 +15,19 @@ spec:
           - path: '*'
           - path: '1_archive'
             exclude: true
+          - path: '2_common'
+            exclude: true
   template:
     metadata:
       name: '{{ .path.basename }}'
     spec:
-      source:
-        repoURL: 'https://github.com/Jefwillems/homelab.git'
-        targetRevision: HEAD
-        path: '{{ .path.path }}'
+      sources:
+        - repoURL: 'https://github.com/Jefwillems/homelab.git'
+          targetRevision: HEAD
+          path: '{{ .path.path }}'
+        - repoURL: 'https://github.com/Jefwillems/homelab.git'
+          targetRevision: HEAD
+          path: '2_common'
       destination:
         server: https://kubernetes.default.svc
         namespace: '{{ .path.basename }}'

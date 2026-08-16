@@ -8,6 +8,7 @@ resources:
   - resources/servicemonitor.yaml
   - resources/oidc-client.yaml
   - resources/repo.yaml
+  - resources/app-of-apps.yaml
 
 patches:
   - path: overlays/argocd-cm.yaml
