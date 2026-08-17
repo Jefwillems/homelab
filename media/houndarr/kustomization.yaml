@@ -12,3 +12,14 @@ helmCharts:
 
 resources:
   - httproute.yaml
+
+patches:
+  - target:
+      kind: StatefulSet
+      name: houndarr
+    patch: |-
+      - op: add
+        path: /spec/template/spec/securityContext
+        value:
+          seccompProfile:
+            type: RuntimeDefault
