@@ -32,7 +32,6 @@ spec:
             capabilities:
               drop: [ALL]
             runAsNonRoot: true
-            readOnlyRootFilesystem: true
           env:
             # The storage peer watches the PVC with chokidar in polling mode.
             # inotify doesn't cross pod mount namespaces on the local-path
