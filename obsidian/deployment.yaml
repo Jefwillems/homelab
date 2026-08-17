@@ -21,16 +21,18 @@ spec:
         runAsUser: 1993
         runAsGroup: 1993
         fsGroup: 1993
-        allowPrivilegeEscalation: false
-        capabilities:
-          drop: [ALL]
         runAsNonRoot: true
-        readOnlyRootFilesystem: true
+        seccompProfile:
+          type: RuntimeDefault
       containers:
         - name: livesync-bridge
           image: ghcr.io/jefwillems/livesync-bridge@sha256:0b45103509265f1f51e0ae47b587f2fd217785e223a15f5105dc649d65715adf
-          # Reads ./dat/config.json (WORKDIR /app) and writes vault files under
-          # ./data (the storage peer baseDir is "data/vault/").
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: [ALL]
+            runAsNonRoot: true
+            readOnlyRootFilesystem: true
           env:
             # The storage peer watches the PVC with chokidar in polling mode.
             # inotify doesn't cross pod mount namespaces on the local-path
