@@ -18,11 +18,14 @@ spec:
         app.kubernetes.io/name: livesync-bridge
     spec:
       securityContext:
-        # denoland/deno image runs as uid/gid 1993. fsGroup makes the
-        # local-path PVC group-writable so the bridge can populate the vault.
         runAsUser: 1993
         runAsGroup: 1993
         fsGroup: 1993
+        allowPrivilegeEscalation: false
+        capabilities:
+          drop: [ALL]
+        runAsNonRoot: true
+        readOnlyRootFilesystem: true
       containers:
         - name: livesync-bridge
           image: ghcr.io/jefwillems/livesync-bridge@sha256:0b45103509265f1f51e0ae47b587f2fd217785e223a15f5105dc649d65715adf
