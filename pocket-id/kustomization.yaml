@@ -11,6 +11,7 @@ helmCharts:
     valuesFile: ./values.yaml
 
 resources:
+  - ./resources/namespace.yaml
   - ./resources/instance.yaml
   - ./resources/default-user.yaml
   - ./resources/platform-owners-group.yaml

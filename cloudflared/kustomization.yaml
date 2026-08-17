@@ -4,6 +4,7 @@ kind: Kustomization
 namespace: cloudflared
 
 resources:
+  - resources/namespace.yaml
   - resources/deployment.yaml
   - resources/oidc-client.yaml
   - resources/cloudflare-tunnel-token.yaml

@@ -4,5 +4,6 @@ kind: Kustomization
 namespace: ci
 
 resources:
+  - resources/namespace.yaml
   - resources/cronjob.yaml
   - resources/renovate-secret.yaml

@@ -12,4 +12,5 @@ helmCharts:
     valuesFile: values.yaml
 
 resources:
-  - ./resources/secret-store.yaml
+  - resources/namespace.yaml
+  - resources/secret-store.yaml

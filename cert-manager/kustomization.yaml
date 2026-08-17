@@ -12,5 +12,6 @@ helmCharts:
     releaseName: cert-manager
 
 resources:
+  - resources/namespace.yaml
   - resources/cluster-issuer.yaml
   - resources/metrics-server-ca.yaml

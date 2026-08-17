@@ -9,3 +9,6 @@ helmCharts:
     valuesFile: ./resources/values.yaml
     includeCRDs: true
     repo: https://kubernetes-sigs.github.io/external-dns/
+
+resources:
+  - resources/namespace.yaml

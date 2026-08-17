@@ -12,5 +12,6 @@ helmCharts:
     releaseName: couchdb
 
 resources:
+  - resources/namespace.yaml
   - resources/httproute.yaml
   - resources/couchdb-credentials.yaml
