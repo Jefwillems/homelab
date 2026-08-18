@@ -8,6 +8,10 @@ route:
       gethomepage.dev/icon: sh-sonarr.svg
       gethomepage.dev/name: Sonarr
       gethomepage.dev/weight: '3'
+      gethomepage.dev/widget.type: sonarr
+      gethomepage.dev/widget.url: https://sonarr.jef.app
+      gethomepage.dev/widget.key: '{{HOMEPAGE_VAR_SONARR_API_KEY}}'
+      gethomepage.dev/widget.enableQueue: 'true'
     hostnames:
       - sonarr.jef.app
     parentRefs:

@@ -12,3 +12,4 @@ resources:
   - resources/deployment.yaml
   - resources/httproute.yaml
   - resources/networkpolicy.yaml
+  - resources/integration-secrets.yaml
