@@ -10,7 +10,7 @@ route:
       gethomepage.dev/weight: '3'
       gethomepage.dev/widget.type: sonarr
       gethomepage.dev/widget.url: https://sonarr.jef.app
-      gethomepage.dev/widget.key: '{{HOMEPAGE_VAR_SONARR_APIKEY}}'
+      gethomepage.dev/widget.key: '{{ `{{HOMEPAGE_VAR_SONARR_APIKEY}}` }}'
       gethomepage.dev/widget.enableQueue: 'true'
     hostnames:
       - sonarr.jef.app
