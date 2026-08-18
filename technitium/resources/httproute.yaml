@@ -11,6 +11,7 @@ metadata:
     gethomepage.dev/widget.type: technitium
     gethomepage.dev/widget.url: http://technitium-web.technitium.svc.cluster.local:5380
     gethomepage.dev/widget.key: '{{HOMEPAGE_VAR_TECHNITIUM_APIKEY}}'
+    gethomepage.dev/widget.fields: '["totalQueries", "totalAuthoritative", "totalCached", "totalBlocked"]'
 spec:
   parentRefs:
     - name: homelab-gateway
