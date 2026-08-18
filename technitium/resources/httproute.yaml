@@ -8,6 +8,9 @@ metadata:
     gethomepage.dev/group: Cluster Management
     gethomepage.dev/icon: sh-technitium.svg
     gethomepage.dev/name: Technitium
+    gethomepage.dev/widget.type: technitium
+    gethomepage.dev/widget.url: http://technitium-web.svc.cluster.local:5380
+    gethomepage.dev/widget.key: '{{ `{{HOMEPAGE_VAR_TECHNITIUM_APIKEY}}` }}'
 spec:
   parentRefs:
     - name: homelab-gateway
