@@ -24,6 +24,8 @@ operator:
     serviceMonitor:
       enabled: true
       trustCRDsExist: true
+  dashboards:
+    enabled: true
 k8sServiceHost: 'localhost'
 k8sServicePort: 7445
 hubble:
