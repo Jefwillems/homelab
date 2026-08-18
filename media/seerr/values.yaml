@@ -9,6 +9,9 @@ route:
       gethomepage.dev/name: Seerr
       gethomepage.dev/pod-selector: app.kubernetes.io/name=seerr-chart
       gethomepage.dev/weight: '2'
+      gethomepage.dev/widget.type: 'seerr'
+      gethomepage.dev/widget.url: http://seerr-seerr-chart.media.svc.cluster.local:80
+      gethomepage.dev/widget.key: '{{ `{{HOMEPAGE_VAR_SEERR_APIKEY}}` }}'
     hostnames:
       - seerr.jef.app
     parentRefs:

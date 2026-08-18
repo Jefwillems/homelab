@@ -3,8 +3,7 @@ kind: HTTPRoute
 metadata:
   name: homepage-route
   annotations:
-    gethomepage.dev/description: Dynamically Detected Homepage
-    gethomepage.dev/enabled: 'true'
+    gethomepage.dev/enabled: 'false'
     gethomepage.dev/group: Cluster Management
     gethomepage.dev/icon: homepage.png
     gethomepage.dev/name: Homepage
