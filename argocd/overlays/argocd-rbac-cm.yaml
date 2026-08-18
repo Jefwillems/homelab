@@ -7,5 +7,6 @@ data:
     g, platform-owners, role:admin
     g, admin, role:admin
     g, role:admin, role:readonly
+    g, readonly, role:readonly
   policy.default: 'role:readonly'
   scopes: '[groups, email]'
