@@ -10,9 +10,6 @@ spec:
   concurrencyPolicy: Forbid
   successfulJobsHistoryLimit: 1
   failedJobsHistoryLimit: 3
-  securityContext:
-    seccompProfile:
-      type: RuntimeDefault
   jobTemplate:
     spec:
       backoffLimit: 1
@@ -29,6 +26,8 @@ spec:
             runAsUser: 1000
             runAsGroup: 1000
             fsGroup: 1000
+            seccompProfile:
+              type: RuntimeDefault
           containers:
             - name: renovate
               image: ghcr.io/renovatebot/renovate:44.31.0
