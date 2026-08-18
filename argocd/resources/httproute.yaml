@@ -9,6 +9,10 @@ metadata:
     gethomepage.dev/icon: sh-argo-cd.svg
     gethomepage.dev/name: ArgoCD
     gethomepage.dev/pod-selector: app.kubernetes.io/name=argocd-server
+    gethomepage.dev/widget.type: argocd
+    gethomepage.dev/widget.url: http://argocd-server.argocd.svc.cluster.local:80
+    gethomepage.dev/widget.key: '{{HOMEPAGE_VAR_ARGOCD_TOKEN}}'
+    gethomepage.dev/widget.fields: '["apps", "healthy", "outOfSync", "degraded"]'
 spec:
   parentRefs:
     - name: homelab-gateway
