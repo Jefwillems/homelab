@@ -35,6 +35,9 @@ spec:
             runAsGroup: 1000
             seccompProfile:
               type: RuntimeDefault
+          envFrom:
+            - secretRef:
+                name: integrations
           env:
             - name: MY_POD_IP
               valueFrom:
