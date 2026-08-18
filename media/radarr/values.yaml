@@ -8,6 +8,10 @@ route:
       gethomepage.dev/icon: sh-radarr.svg
       gethomepage.dev/name: Radarr
       gethomepage.dev/weight: '3'
+      gethomepage.dev/widget.type: radarr
+      gethomepage.dev/widget.url: http://radarr.media.svc.cluster.local:7878
+      gethomepage.dev/widget.key: '{{ `{{HOMEPAGE_VAR_RADARR_APIKEY}}` }}'
+      gethomepage.dev/widget.enableQueue: 'true'
     hostnames:
       - radarr.jef.app
     parentRefs:
