@@ -10,3 +10,5 @@ spec:
     userRefs:
       - name: jef
         namespace: pocket-id
+      - name: wim
+        namespace: pocket-id
