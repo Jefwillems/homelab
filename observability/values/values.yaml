@@ -104,6 +104,10 @@ grafana:
         gnetId: 11001
         revision: 1
         datasource: Prometheus
+      tetragon:
+        gnetId: 20189
+        revision: 1
+        datasource: Loki
 
   # Loki datasource (logs). Prometheus is provisioned by the chart as default.
   additionalDataSources:

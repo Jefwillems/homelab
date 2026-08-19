@@ -1,0 +1,19 @@
+tetragon:
+  # -- Access Kubernetes API to associate Tetragon events with Kubernetes pods.
+  enableK8sAPI: true
+  # -- Enable Capabilities visibility in exec and kprobe events.
+  enableProcessCred: true
+  # -- Enable Namespaces visibility in exec and kprobe events.
+  enableProcessNs: true
+  # -- Enable policy filter. This is required for K8s namespace and pod-label filtering.
+  enablePolicyFilter: true
+  prometheus:
+    enabled: true
+    serviceMonitor:
+      enabled: true
+
+tetragonOperator:
+  prometheus:
+    enabled: true
+    serviceMonitor:
+      enabled: true
