@@ -6,3 +6,4 @@ helmCharts:
     repo: https://helm.cilium.io/
     version: 1.7.0
     valuesFile: values.yaml
+    releaseName: tetragon
