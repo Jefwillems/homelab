@@ -5,10 +5,14 @@ metadata:
 spec:
   kprobes:
   - call: "tcp_connect"
+    return: false
     syscall: false
     args:
     - index: 0
       type: "sock"
+      maxData: false
+      resolve: ''
+      returnCopy: false
     selectors:
     - matchArgs:
       - index: 0
