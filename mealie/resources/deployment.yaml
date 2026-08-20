@@ -1,0 +1,106 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mealie
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mealie
+  template:
+    metadata:
+      labels:
+        app: mealie
+    spec:
+      containers:
+        - name: mealie
+          image: ghcr.io/mealie-recipes/mealie:v3.23.1
+          ports:
+            - containerPort: 9000
+              name: http
+              protocol: TCP
+          volumeMounts:
+            - name: data
+              mountPath: /app/data
+          env:
+            - name: ALLOW_SIGNUP
+              value: "false"
+            - name: PUID
+              value: "1000"
+            - name: PGID
+              value: "1000"
+            - name: TZ
+              value: "Europe/Brussels"
+            - name: BASE_URL
+              value: "https://mealie.jef.app"
+            # Postgres — credentials/host/port/dbname come from the CNPG-managed
+            # `mealie-db-app` secret (created by the Cluster in database.yaml).
+            - name: DB_ENGINE
+              value: postgres
+            - name: POSTGRES_SERVER
+              valueFrom:
+                secretKeyRef:
+                  name: mealie-db-app
+                  key: host
+            - name: POSTGRES_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: mealie-db-app
+                  key: port
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: mealie-db-app
+                  key: username
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mealie-db-app
+                  key: password
+            - name: POSTGRES_DB
+              valueFrom:
+                secretKeyRef:
+                  name: mealie-db-app
+                  key: dbname
+            - name: OIDC_AUTH_ENABLED
+              value: "true"
+            - name: OIDC_SIGNUP_ENABLED
+              value: "true"
+            - name: OIDC_AUTO_REDIRECT
+              value: "false"
+            - name: OIDC_PROVIDER_NAME
+              value: "Pocket ID"
+            - name: OIDC_REMEMBER_ME
+              value: "true"
+            - name: OIDC_USER_CLAIM
+              value: "email"
+            # Grant admin to Pocket ID users in the `platform-owners` group
+            # (same group Grafana treats as admin — see observability values.yaml).
+            # Mealie only surfaces the groups claim when the `groups` scope is
+            # requested; the default scope set (openid profile email) omits it,
+            # so we override the full list here.
+            - name: OIDC_SCOPES_OVERRIDE
+              value: "openid profile email groups"
+            - name: OIDC_GROUPS_CLAIM
+              value: "groups"
+            - name: OIDC_ADMIN_GROUP
+              value: "platform-owners"
+            - name: OIDC_CONFIGURATION_URL
+              valueFrom:
+                secretKeyRef:
+                  name: mealie-oidc
+                  key: discovery_url
+            - name: OIDC_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: mealie-oidc
+                  key: client_id
+            - name: OIDC_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: mealie-oidc
+                  key: client_secret
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: mealie-data
