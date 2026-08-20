@@ -10,3 +10,4 @@ helmCharts:
 
 resources:
   - resources/egress-policy.yaml
+  - resources/grafana-dashboard.yaml

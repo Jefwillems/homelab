@@ -1,0 +1,271 @@
+# Grafana dashboard for the Tetragon "monitor-network-activity-outside-cluster-cidr-range"
+# TracingPolicy (kprobe on tcp_connect).
+#
+# Data source: Loki. Tetragon's Helm chart runs an "export-stdout" sidecar in every
+# tetragon-* DaemonSet pod that tails the JSON event file and prints each event to
+# stdout. Alloy (varlog tailer) ships those container logs to Loki, so the events
+# land under {namespace="kube-system", pod=~"tetragon-.+", container="export-stdout"}.
+#
+# Labeled grafana_dashboard="1" so the kube-prometheus-stack Grafana sidecar
+# (searchNamespace: ALL) auto-imports it.
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: tetragon-egress-grafana-dashboard
+  namespace: kube-system
+  labels:
+    app.kubernetes.io/name: tetragon
+    grafana_dashboard: "1"
+data:
+  tetragon-egress.json: |-
+    {
+      "annotations": { "list": [] },
+      "editable": true,
+      "graphTooltip": 0,
+      "title": "Tetragon — Egress outside cluster CIDR",
+      "uid": "tetragon-egress",
+      "tags": ["tetragon", "cilium", "security", "network"],
+      "timezone": "",
+      "schemaVersion": 39,
+      "version": 1,
+      "time": { "from": "now-24h", "to": "now" },
+      "refresh": "1m",
+      "templating": {
+        "list": [
+          {
+            "name": "datasource",
+            "label": "Loki",
+            "type": "datasource",
+            "query": "loki",
+            "current": {},
+            "hide": 0
+          },
+          {
+            "name": "policy",
+            "label": "Policy",
+            "type": "textbox",
+            "current": { "text": "monitor-network-activity-outside-cluster-cidr-range", "value": "monitor-network-activity-outside-cluster-cidr-range" }
+          },
+          {
+            "name": "namespace",
+            "label": "Source namespace",
+            "type": "textbox",
+            "current": { "text": ".+", "value": ".+" }
+          }
+        ]
+      },
+      "panels": [
+        {
+          "id": 1,
+          "type": "stat",
+          "title": "Egress connections (range)",
+          "gridPos": { "h": 5, "w": 6, "x": 0, "y": 0 },
+          "datasource": { "type": "loki", "uid": "${datasource}" },
+          "targets": [
+            {
+              "refId": "A",
+              "queryType": "instant",
+              "expr": "sum(count_over_time({namespace=\"kube-system\", pod=~\"tetragon-.+\", container=\"export-stdout\"} | json policy=\"process_kprobe.policy_name\" | policy=\"$policy\" [$__range]))"
+            }
+          ],
+          "options": {
+            "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+            "colorMode": "value",
+            "graphMode": "area"
+          },
+          "fieldConfig": {
+            "defaults": { "unit": "short", "thresholds": { "mode": "absolute", "steps": [ { "color": "blue", "value": null } ] } },
+            "overrides": []
+          }
+        },
+        {
+          "id": 2,
+          "type": "stat",
+          "title": "Distinct source pods",
+          "gridPos": { "h": 5, "w": 6, "x": 6, "y": 0 },
+          "datasource": { "type": "loki", "uid": "${datasource}" },
+          "targets": [
+            {
+              "refId": "A",
+              "queryType": "instant",
+              "expr": "count(sum by (pod_name) (count_over_time({namespace=\"kube-system\", pod=~\"tetragon-.+\", container=\"export-stdout\"} | json policy=\"process_kprobe.policy_name\", pod_name=\"process_kprobe.process.pod.name\" | policy=\"$policy\" | pod_name!=\"\" [$__range])))"
+            }
+          ],
+          "options": {
+            "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+            "colorMode": "value",
+            "graphMode": "none"
+          },
+          "fieldConfig": {
+            "defaults": { "unit": "short", "thresholds": { "mode": "absolute", "steps": [ { "color": "green", "value": null } ] } },
+            "overrides": []
+          }
+        },
+        {
+          "id": 3,
+          "type": "stat",
+          "title": "Distinct destinations",
+          "gridPos": { "h": 5, "w": 6, "x": 12, "y": 0 },
+          "datasource": { "type": "loki", "uid": "${datasource}" },
+          "targets": [
+            {
+              "refId": "A",
+              "queryType": "instant",
+              "expr": "count(sum by (daddr) (count_over_time({namespace=\"kube-system\", pod=~\"tetragon-.+\", container=\"export-stdout\"} | json policy=\"process_kprobe.policy_name\", daddr=\"process_kprobe.args[0].sock_arg.daddr\" | policy=\"$policy\" | daddr!=\"\" [$__range])))"
+            }
+          ],
+          "options": {
+            "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+            "colorMode": "value",
+            "graphMode": "none"
+          },
+          "fieldConfig": {
+            "defaults": { "unit": "short", "thresholds": { "mode": "absolute", "steps": [ { "color": "purple", "value": null } ] } },
+            "overrides": []
+          }
+        },
+        {
+          "id": 4,
+          "type": "stat",
+          "title": "Connection rate (per min)",
+          "gridPos": { "h": 5, "w": 6, "x": 18, "y": 0 },
+          "datasource": { "type": "loki", "uid": "${datasource}" },
+          "targets": [
+            {
+              "refId": "A",
+              "queryType": "instant",
+              "expr": "sum(rate({namespace=\"kube-system\", pod=~\"tetragon-.+\", container=\"export-stdout\"} | json policy=\"process_kprobe.policy_name\" | policy=\"$policy\" [5m])) * 60"
+            }
+          ],
+          "options": {
+            "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+            "colorMode": "value",
+            "graphMode": "area"
+          },
+          "fieldConfig": {
+            "defaults": { "unit": "cpm", "thresholds": { "mode": "absolute", "steps": [ { "color": "green", "value": null }, { "color": "yellow", "value": 60 }, { "color": "red", "value": 300 } ] } },
+            "overrides": []
+          }
+        },
+        {
+          "id": 5,
+          "type": "timeseries",
+          "title": "Egress connections over time — by source namespace",
+          "gridPos": { "h": 9, "w": 24, "x": 0, "y": 5 },
+          "datasource": { "type": "loki", "uid": "${datasource}" },
+          "targets": [
+            {
+              "refId": "A",
+              "queryType": "range",
+              "expr": "sum by (ns) (count_over_time({namespace=\"kube-system\", pod=~\"tetragon-.+\", container=\"export-stdout\"} | json policy=\"process_kprobe.policy_name\", ns=\"process_kprobe.process.pod.namespace\" | policy=\"$policy\" | ns=~\"$namespace\" [$__interval]))",
+              "legendFormat": "{{ns}}"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "short",
+              "custom": { "drawStyle": "bars", "stacking": { "mode": "normal" }, "fillOpacity": 60, "lineWidth": 0 }
+            },
+            "overrides": []
+          },
+          "options": { "legend": { "displayMode": "table", "placement": "right", "calcs": ["sum"] }, "tooltip": { "mode": "multi", "sort": "desc" } }
+        },
+        {
+          "id": 6,
+          "type": "table",
+          "title": "Top destinations (address:port)",
+          "gridPos": { "h": 10, "w": 12, "x": 0, "y": 14 },
+          "datasource": { "type": "loki", "uid": "${datasource}" },
+          "targets": [
+            {
+              "refId": "A",
+              "queryType": "instant",
+              "expr": "topk(25, sum by (daddr, dport) (count_over_time({namespace=\"kube-system\", pod=~\"tetragon-.+\", container=\"export-stdout\"} | json policy=\"process_kprobe.policy_name\", daddr=\"process_kprobe.args[0].sock_arg.daddr\", dport=\"process_kprobe.args[0].sock_arg.dport\" | policy=\"$policy\" | daddr!=\"\" [$__range])))",
+              "format": "table"
+            }
+          ],
+          "transformations": [
+            { "id": "organize", "options": { "excludeByName": { "Time": true }, "renameByName": { "daddr": "Destination", "dport": "Port", "Value": "Connections" } } },
+            { "id": "sortBy", "options": { "fields": {}, "sort": [ { "field": "Connections", "desc": true } ] } }
+          ]
+        },
+        {
+          "id": 7,
+          "type": "table",
+          "title": "Top source pods / binaries",
+          "gridPos": { "h": 10, "w": 12, "x": 12, "y": 14 },
+          "datasource": { "type": "loki", "uid": "${datasource}" },
+          "targets": [
+            {
+              "refId": "A",
+              "queryType": "instant",
+              "expr": "topk(25, sum by (ns, pod_name, binary) (count_over_time({namespace=\"kube-system\", pod=~\"tetragon-.+\", container=\"export-stdout\"} | json policy=\"process_kprobe.policy_name\", ns=\"process_kprobe.process.pod.namespace\", pod_name=\"process_kprobe.process.pod.name\", binary=\"process_kprobe.process.binary\" | policy=\"$policy\" | ns=~\"$namespace\" [$__range])))",
+              "format": "table"
+            }
+          ],
+          "transformations": [
+            { "id": "organize", "options": { "excludeByName": { "Time": true }, "renameByName": { "ns": "Namespace", "pod_name": "Pod", "binary": "Binary", "Value": "Connections" } } },
+            { "id": "sortBy", "options": { "fields": {}, "sort": [ { "field": "Connections", "desc": true } ] } }
+          ]
+        },
+        {
+          "id": 8,
+          "type": "table",
+          "title": "Top destination ports",
+          "gridPos": { "h": 8, "w": 12, "x": 0, "y": 24 },
+          "datasource": { "type": "loki", "uid": "${datasource}" },
+          "targets": [
+            {
+              "refId": "A",
+              "queryType": "instant",
+              "expr": "topk(15, sum by (dport) (count_over_time({namespace=\"kube-system\", pod=~\"tetragon-.+\", container=\"export-stdout\"} | json policy=\"process_kprobe.policy_name\", dport=\"process_kprobe.args[0].sock_arg.dport\" | policy=\"$policy\" | dport!=\"\" [$__range])))",
+              "format": "table"
+            }
+          ],
+          "transformations": [
+            { "id": "organize", "options": { "excludeByName": { "Time": true }, "renameByName": { "dport": "Port", "Value": "Connections" } } },
+            { "id": "sortBy", "options": { "fields": {}, "sort": [ { "field": "Connections", "desc": true } ] } }
+          ]
+        },
+        {
+          "id": 9,
+          "type": "timeseries",
+          "title": "Tetragon event health — missed / lost",
+          "description": "Signals that kprobe events were dropped before export. If non-zero, the dashboards under-count.",
+          "gridPos": { "h": 8, "w": 12, "x": 12, "y": 24 },
+          "datasource": { "type": "prometheus", "uid": "prometheus" },
+          "targets": [
+            {
+              "refId": "A",
+              "expr": "sum(rate(tetragon_missed_events_total[5m]))",
+              "legendFormat": "missed events/s"
+            },
+            {
+              "refId": "B",
+              "expr": "sum(rate(tetragon_ringbuf_perf_event_lost[5m]))",
+              "legendFormat": "ringbuf lost/s"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": { "unit": "short", "custom": { "drawStyle": "line", "fillOpacity": 10 } },
+            "overrides": []
+          },
+          "options": { "legend": { "displayMode": "table", "placement": "bottom", "calcs": ["last", "max"] }, "tooltip": { "mode": "multi" } }
+        },
+        {
+          "id": 10,
+          "type": "logs",
+          "title": "Recent egress events",
+          "gridPos": { "h": 12, "w": 24, "x": 0, "y": 32 },
+          "datasource": { "type": "loki", "uid": "${datasource}" },
+          "targets": [
+            {
+              "refId": "A",
+              "queryType": "range",
+              "expr": "{namespace=\"kube-system\", pod=~\"tetragon-.+\", container=\"export-stdout\"} | json policy=\"process_kprobe.policy_name\", ns=\"process_kprobe.process.pod.namespace\", pod_name=\"process_kprobe.process.pod.name\", binary=\"process_kprobe.process.binary\", daddr=\"process_kprobe.args[0].sock_arg.daddr\", dport=\"process_kprobe.args[0].sock_arg.dport\" | policy=\"$policy\" | ns=~\"$namespace\" | line_format \"{{.ns}}/{{.pod_name}} {{.binary}} -> {{.daddr}}:{{.dport}}\""
+            }
+          ],
+          "options": { "showTime": true, "wrapLogMessage": true, "enableLogDetails": true, "dedupStrategy": "none", "sortOrder": "Descending" }
+        }
+      ]
+    }
