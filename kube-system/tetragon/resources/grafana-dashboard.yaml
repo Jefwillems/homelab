@@ -185,7 +185,7 @@ data:
             }
           ],
           "transformations": [
-            { "id": "organize", "options": { "excludeByName": { "Time": true }, "renameByName": { "daddr": "Destination", "dport": "Port", "Value": "Connections" } } },
+            { "id": "organize", "options": { "excludeByName": { "Time": true }, "renameByName": { "daddr": "Destination", "dport": "Port", "Value #A": "Connections" } } },
             { "id": "sortBy", "options": { "fields": {}, "sort": [ { "field": "Connections", "desc": true } ] } }
           ]
         },
@@ -204,7 +204,7 @@ data:
             }
           ],
           "transformations": [
-            { "id": "organize", "options": { "excludeByName": { "Time": true }, "renameByName": { "ns": "Namespace", "pod_name": "Pod", "binary": "Binary", "Value": "Connections" } } },
+            { "id": "organize", "options": { "excludeByName": { "Time": true }, "renameByName": { "ns": "Namespace", "pod_name": "Pod", "binary": "Binary", "Value #A": "Connections" } } },
             { "id": "sortBy", "options": { "fields": {}, "sort": [ { "field": "Connections", "desc": true } ] } }
           ]
         },
@@ -223,7 +223,7 @@ data:
             }
           ],
           "transformations": [
-            { "id": "organize", "options": { "excludeByName": { "Time": true }, "renameByName": { "dport": "Port", "Value": "Connections" } } },
+            { "id": "organize", "options": { "excludeByName": { "Time": true }, "renameByName": { "dport": "Port", "Value #A": "Connections" } } },
             { "id": "sortBy", "options": { "fields": {}, "sort": [ { "field": "Connections", "desc": true } ] } }
           ]
         },
