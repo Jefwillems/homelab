@@ -5,7 +5,7 @@ namespace: pocket-id
 
 helmCharts:
   - name: pocket-id-operator
-    version: 0.14.0
+    version: 0.14.1
     repo: oci://ghcr.io/aclerici38/charts
     includeCRDs: true
     valuesFile: ./values.yaml
