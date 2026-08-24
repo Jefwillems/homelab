@@ -6,14 +6,14 @@ namespace: observability
 helmCharts:
   - name: kube-prometheus-stack
     repo: https://prometheus-community.github.io/helm-charts
-    version: '88.5.3'
+    version: '88.5.4'
     releaseName: kube-prometheus-stack
     namespace: observability
     valuesFile: values/values.yaml
     includeCRDs: true
   - name: loki
     repo: https://grafana-community.github.io/helm-charts
-    version: '18.11.0'
+    version: '18.11.2'
     releaseName: loki
     namespace: observability
     valuesFile: values/loki.yaml
