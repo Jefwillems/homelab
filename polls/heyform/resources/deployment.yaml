@@ -38,7 +38,7 @@ spec:
             - name: APP_LISTEN_PORT
               value: '8000'
             - name: APP_HOMEPAGE_URL
-              value: 'forms.jef.app'
+              value: 'https://forms.jef.app'
             - name: MONGO_URI
               value: 'mongodb://mongodb:27017/heyform'
             - name: MONGO_USER
