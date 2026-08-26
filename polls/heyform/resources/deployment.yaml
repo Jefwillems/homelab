@@ -45,12 +45,12 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: polls
-                  key: mongo-user
+                  key: HEYFORM_MONGO_USERNAME
             - name: MONGO_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: polls
-                  key: mongo-password
+                  key: HEYFORM_MONGO_PASSWORD
           ports:
             - name: http
               containerPort: 8000

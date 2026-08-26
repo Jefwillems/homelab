@@ -7,3 +7,13 @@ metrics:
   enabled: true
   serviceMonitor:
     enabled: true
+
+customUsers:
+  - existingSecret: polls
+    secretKeys:
+      name: HEYFORM_MONGO_USERNAME
+      password: HEYFORM_MONGO_PASSWORD
+      database: HEYFORM_MONGO_DATABASE
+    roles:
+      - readWrite
+      - dbAdmin
