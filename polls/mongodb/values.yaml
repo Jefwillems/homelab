@@ -1,0 +1,9 @@
+revisionHistoryLimit: 3
+
+auth:
+  existingSecret: polls
+  existingSecretPasswordKey: mongo-password
+metrics:
+  enabled: true
+  serviceMonitor:
+    enabled: true
