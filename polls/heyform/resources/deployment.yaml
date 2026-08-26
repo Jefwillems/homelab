@@ -33,7 +33,7 @@ spec:
               type: RuntimeDefault
           envFrom:
             - secretRef:
-                name: heyform
+                name: polls
           env:
             - name: APP_LISTEN_PORT
               value: '8000'
