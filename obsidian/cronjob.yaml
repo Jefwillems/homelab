@@ -6,7 +6,7 @@ metadata:
     app.kubernetes.io/name: vault-manager
 spec:
   # 03:00 daily — after the user has stopped editing for the night.
-  schedule: "0 3 * * *"
+  schedule: "0 0 1 * *"
   timeZone: Europe/Brussels
   # Never run two passes at once; a pass mutates the vault on the shared PVC.
   concurrencyPolicy: Forbid
