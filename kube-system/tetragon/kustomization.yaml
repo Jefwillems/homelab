@@ -6,7 +6,7 @@ namespace: kube-system
 helmCharts:
   - name: tetragon
     repo: https://helm.cilium.io/
-    version: 1.7.0
+    version: 1.7.1
     valuesFile: values.yaml
     releaseName: tetragon
 
