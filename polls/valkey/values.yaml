@@ -1,0 +1,14 @@
+auth:
+  enabled: true
+  existingSecret: polls
+  existingSecretPasswordKey: valkey-password
+
+persistence:
+  enabled: true
+  size: 2Gi
+
+
+config:
+  maxMemory: "800mb"
+  maxMemoryPolicy: "allkeys-lru"
+  save: "900 1 300 10 60 10000"

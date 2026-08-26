@@ -6,4 +6,5 @@ namespace: polls
 resources:
   - mongodb/
   - heyform/
+  - valkey/
   - secret.yaml

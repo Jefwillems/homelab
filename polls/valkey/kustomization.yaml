@@ -1,0 +1,11 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: polls
+
+helmCharts:
+  - name: valkey
+    repo: oci://registry-1.docker.io/cloudpirates
+    version: 0.25.5
+    releaseName: valkey
+    valuesFile: values.yaml
