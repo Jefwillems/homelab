@@ -51,6 +51,15 @@ spec:
                 secretKeyRef:
                   name: polls
                   key: HEYFORM_MONGO_PASSWORD
+            - name: REDIS_HOST
+              value: 'valkey'
+            - name: REDIS_PORT
+              value: '6379'
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: polls
+                  key: valkey-password
           ports:
             - name: http
               containerPort: 8000
