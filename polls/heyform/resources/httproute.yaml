@@ -7,6 +7,7 @@ metadata:
     gethomepage.dev/group: Utilities
     gethomepage.dev/icon: sh-heyform.svg
     gethomepage.dev/name: Heyform
+    gethomepage.dev/description: A form builder and submission system
     gethomepage.dev/pod-selector: app.kubernetes.io/name=heyform
 spec:
   parentRefs:
