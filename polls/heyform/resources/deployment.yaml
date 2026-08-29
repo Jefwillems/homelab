@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: heyform
-          image: 'heyform/community-edition:v3.0.1'
+          image: 'heyform/community-edition:v3.0.2'
           imagePullPolicy: IfNotPresent
           securityContext:
             allowPrivilegeEscalation: false
