@@ -5,7 +5,7 @@ helmCharts:
   - name: sonarr
     releaseName: sonarr
     repo: oci://oci.trueforge.org/truecharts
-    version: 26.7.6
+    version: 26.8.1
     valuesFile: values.yaml
 
 patches:
