@@ -5,7 +5,7 @@ helmCharts:
   - name: prowlarr
     releaseName: prowlarr
     repo: oci://oci.trueforge.org/truecharts
-    version: 22.11.0
+    version: 22.12.0
     valuesFile: values.yaml
 
 patches:
