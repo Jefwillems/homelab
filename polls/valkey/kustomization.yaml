@@ -6,6 +6,6 @@ namespace: polls
 helmCharts:
   - name: valkey
     repo: oci://registry-1.docker.io/cloudpirates
-    version: 0.25.7
+    version: 0.25.8
     releaseName: valkey
     valuesFile: values.yaml
