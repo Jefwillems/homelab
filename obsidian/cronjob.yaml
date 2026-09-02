@@ -6,7 +6,7 @@ metadata:
     app.kubernetes.io/name: vault-manager
 spec:
   # 03:00 daily — after the user has stopped editing for the night.
-  schedule: "0 0 1 * *"
+  schedule: "0 3 * * *"
   timeZone: Europe/Brussels
   # Never run two passes at once; a pass mutates the vault on the shared PVC.
   concurrencyPolicy: Forbid
@@ -53,10 +53,10 @@ spec:
                 - name: BRAINDUMP_DIR
                   value: Braindumps
                 - name: COPILOT_MODEL
-                  value: claude-sonnet-4.5
-                # COPILOT_REASONING_EFFORT is intentionally unset: claude-sonnet-4.5
-                # (via the Copilot API) rejects an explicit reasoning-effort value.
-                # Only set it for models that models.list reports as supporting it.
+                  value: mai-code-1.1-flash
+                # COPILOT_REASONING_EFFORT is intentionally unset: verify against
+                # `models.list` before setting it — only set it for models that
+                # report support for configurable reasoning effort.
                 - name: RUN_TIMEOUT
                   value: 45m
                 - name: LOG_LEVEL
