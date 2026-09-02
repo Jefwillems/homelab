@@ -1,0 +1,25 @@
+workload:
+  main:
+    podSpec:
+      containers:
+        main:
+          env:
+            AUTH: "off"
+
+route:
+  main:
+    enabled: true
+    annotations:
+      gethomepage.dev/description: Profile management
+      gethomepage.dev/enabled: 'true'
+      gethomepage.dev/group: Media
+      gethomepage.dev/icon: sh-profilarr.svg
+      gethomepage.dev/name: Profilarr
+      gethomepage.dev/weight: '3'
+    hostnames:
+      - profilarr.jef.app
+    parentRefs:
+      - name: homelab-gateway
+        namespace: gateway
+        group: gateway.networking.k8s.io
+        kind: Gateway
