@@ -19,10 +19,8 @@ grafana:
   service:
     type: ClusterIP
 
-  # OIDC wiring pulled from the operator-managed grafana-oidc secret. Grafana
-  # maps these env vars onto [auth.generic_oauth] automatically, so credentials
-  # AND the Pocket ID endpoint URLs stay out of grafana.ini/git and follow the
-  # IdP if it ever moves.
+  env:
+    GF_FEATURE_TOGGLES_GRAFANAADVISOR: "true"
   envValueFrom:
     GF_AUTH_GENERIC_OAUTH_CLIENT_ID:
       secretKeyRef:
