@@ -7,3 +7,21 @@ helmCharts:
     version: 2.2.0
     releaseName: profilarr
     valuesFile: values.yaml
+
+patches:
+  - patch: |
+      - op: add
+        path: /spec/rules/0/backendRefs/0/kind
+        value: Service
+      - op: add
+        path: /spec/rules/0/backendRefs/0/group
+        value: ''
+      - op: add
+        path: /spec/rules/0/backendRefs/0/weight
+        value: 1
+      - op: replace
+        path: /apiVersion
+        value: "gateway.networking.k8s.io/v1"
+    target:
+      kind: HTTPRoute
+      name: profilarr
