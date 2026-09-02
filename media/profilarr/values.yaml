@@ -5,6 +5,7 @@ workload:
         main:
           env:
             AUTH: "off"
+            ORIGIN: "https://profilarr.jef.app"
 
 route:
   main:
