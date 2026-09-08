@@ -6,6 +6,6 @@ namespace: polls
 helmCharts:
   - name: mongodb
     repo: oci://registry-1.docker.io/cloudpirates
-    version: 0.18.11
+    version: 0.18.12
     valuesFile: values.yaml
     releaseName: mongodb
