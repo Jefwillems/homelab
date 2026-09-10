@@ -51,7 +51,7 @@ spec:
               echo "Waiting for Jellyfin SSO endpoint..."
               for i in $(seq 1 30); do
                 if curl -fsS -o /dev/null \
-                    "$JELLYFIN_URL/sso/OID/Get?api_key=$JELLYFIN_API_KEY"; then
+                    "$JELLYFIN_URL/sso/OID/Get?ApiKey=$JELLYFIN_API_KEY"; then
                   echo "Jellyfin SSO endpoint reachable."
                   break
                 fi
@@ -96,6 +96,6 @@ spec:
                 -X POST \
                 -H 'Content-Type: application/json' \
                 --data-raw "$BODY" \
-                "$JELLYFIN_URL/sso/OID/Add/$PROVIDER_NAME?api_key=$JELLYFIN_API_KEY"
+                "$JELLYFIN_URL/sso/OID/Add/$PROVIDER_NAME?ApiKey=$JELLYFIN_API_KEY"
               echo
               echo "Done."
