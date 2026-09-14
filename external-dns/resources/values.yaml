@@ -1,3 +1,5 @@
+policy: sync
+
 sources:
   - gateway-httproute
 
