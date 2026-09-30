@@ -8,7 +8,7 @@ metadata:
     gethomepage.dev/group: Cluster Management
     gethomepage.dev/icon: sh-cilium-hubble.svg
     gethomepage.dev/name: Hubble
-    gethomepage.dev/href: "https://hubble.jef.app"
+    gethomepage.dev/pod-selector: app.kubernetes.io/name=hubble-ui
 spec:
   parentRefs:
     - name: homelab-gateway
