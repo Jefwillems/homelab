@@ -16,18 +16,6 @@ route:
         group: gateway.networking.k8s.io
         kind: Gateway
 
-workload:
-  main:
-    podSpec:
-      containers:
-        main:
-          env:
-             # External | Basic | Forms
-            PROWLARR__AUTH__METHOD: "Forms"
-            # DisabledForLocalAddresses | Enabled
-            PROWLARR__AUTH__REQUIRED: "Enabled"
-
-
 persistence:
   config:
     enabled: true
