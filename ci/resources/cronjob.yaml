@@ -31,7 +31,7 @@ spec:
               type: RuntimeDefault
           containers:
             - name: renovate
-              image: ghcr.io/renovatebot/renovate:44.151.2
+              image: ghcr.io/renovatebot/renovate:44.161.0
               args:
                 - Jefwillems/homelab
                 - Jefwillems/dropper
