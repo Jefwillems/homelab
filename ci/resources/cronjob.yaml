@@ -23,10 +23,9 @@ spec:
           restartPolicy: Never
           securityContext:
             runAsNonRoot: true
-            # Match the image's ubuntu user, which owns /home/ubuntu.
             runAsUser: 12021
-            runAsGroup: 1000
-            fsGroup: 1000
+            runAsGroup: 0
+            fsGroup: 0
             seccompProfile:
               type: RuntimeDefault
           containers:
