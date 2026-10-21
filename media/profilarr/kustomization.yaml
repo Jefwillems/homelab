@@ -4,7 +4,7 @@ kind: Kustomization
 helmCharts:
   - name: profilarr
     repo: oci://oci.trueforge.org/truecharts
-    version: 5.0.2
+    version: 5.0.3
     releaseName: profilarr
     valuesFile: values.yaml
 
