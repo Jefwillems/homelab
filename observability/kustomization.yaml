@@ -13,13 +13,13 @@ helmCharts:
     includeCRDs: true
   - name: loki
     repo: https://grafana-community.github.io/helm-charts
-    version: '19.0.3'
+    version: '19.1.1'
     releaseName: loki
     namespace: observability
     valuesFile: values/loki.yaml
   - name: alloy
     repo: https://grafana.github.io/helm-charts
-    version: '1.14.1'
+    version: '1.14.2'
     releaseName: alloy
     namespace: observability
     valuesFile: values/alloy.yaml
