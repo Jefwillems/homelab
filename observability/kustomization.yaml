@@ -19,7 +19,7 @@ helmCharts:
     valuesFile: values/loki.yaml
   - name: alloy
     repo: https://grafana.github.io/helm-charts
-    version: '1.14.3'
+    version: '1.14.4'
     releaseName: alloy
     namespace: observability
     valuesFile: values/alloy.yaml
