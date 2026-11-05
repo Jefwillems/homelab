@@ -64,5 +64,3 @@ lokiCanary:
   enabled: false
 test:
   enabled: false
-minio:
-  enabled: false
