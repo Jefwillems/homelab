@@ -36,3 +36,4 @@ resources:
   - resources/grafana-oidc-client.yaml
   - resources/prometheus-httproute.yaml
   - resources/alertmanager-config.yaml
+  - resources/alertmanager-discord-secret.yaml
