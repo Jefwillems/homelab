@@ -25,7 +25,7 @@ helmCharts:
     valuesFile: values/alloy.yaml
   - name: prometheus-pushgateway
     repo: https://prometheus-community.github.io/helm-charts
-    version: '3.11.1'
+    version: '3.11.2'
     releaseName: prometheus-pushgateway
     namespace: observability
     valuesFile: values/pushgateway.yaml
