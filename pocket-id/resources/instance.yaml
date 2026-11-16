@@ -4,7 +4,7 @@ kind: PocketIDInstance
 metadata:
   name: pocket-id
 spec:
-  image: ghcr.io/pocket-id/pocket-id:v2.19.2-distroless@sha256:7b1231ff19150d2003ab4e2f26c363c812e051ac5df6f27e5e3835f9781890fb
+  image: ghcr.io/pocket-id/pocket-id:v2.19.3-distroless@sha256:523271bff6390c33f149117915f63a375e49c6856695f3da71f9405954b7bb24
   encryptionKey:
     valueFrom:
       secretKeyRef:
