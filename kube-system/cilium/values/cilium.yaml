@@ -54,6 +54,15 @@ hubble:
       enabled: true
       annotations:
         grafana_dashboard: '1'
+  tls:
+    auto:
+      enabled: true
+      method: certmanager
+      certValidityDuration: 365
+      certManagerIssuerRef:
+        group: "cert-manager.io"
+        kind: "ClusterIssuer"
+        name: "letsencrypt-prod"
 
 cgroup:
   autoMount:
