@@ -89,6 +89,8 @@ securityContext:
       - SYS_RESOURCE
 envoy:
   enabled: true
+  # Keep the agent and Envoy bootstrap on the same discovery mode.
+  xdsMode: ads
   prometheus:
     enabled: true
     serviceMonitor:
