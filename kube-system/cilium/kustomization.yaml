@@ -15,4 +15,5 @@ resources:
   - resources/bgppeerconfig.yaml
   - resources/bgpadvertisement.yaml
   - resources/dynamic-metrics-config.yaml
+  - resources/hubble-ca.yaml
   - resources/hubble-httproute.yaml

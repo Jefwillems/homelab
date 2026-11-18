@@ -1,0 +1,30 @@
+# Use the existing self-signed issuer to bootstrap a shared CA for Hubble mTLS,
+# not to sign the individual Hubble server and client certificates.
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: hubble-ca
+  namespace: kube-system
+spec:
+  isCA: true
+  commonName: hubble-ca
+  secretName: hubble-ca-tls
+  duration: 87600h # 10y
+  renewBefore: 8760h # 1y
+  privateKey:
+    algorithm: ECDSA
+    size: 256
+    rotationPolicy: Never
+  issuerRef:
+    name: selfsigned
+    kind: ClusterIssuer
+    group: cert-manager.io
+---
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: hubble-ca
+  namespace: kube-system
+spec:
+  ca:
+    secretName: hubble-ca-tls

@@ -61,8 +61,8 @@ hubble:
       certValidityDuration: 365
       certManagerIssuerRef:
         group: "cert-manager.io"
-        kind: "ClusterIssuer"
-        name: "letsencrypt-prod"
+        kind: "Issuer"
+        name: "hubble-ca"
 
 cgroup:
   autoMount:
