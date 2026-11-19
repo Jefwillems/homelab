@@ -4,7 +4,7 @@ kind: Kustomization
 namespace: argocd
 resources:
   - resources/namespace.yaml
-  - 'https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml'
+  - 'https://raw.githubusercontent.com/argoproj/argo-cd/v3.6.2/manifests/install.yaml'
   - resources/httproute.yaml
   - resources/servicemonitor.yaml
   - resources/oidc-client.yaml
